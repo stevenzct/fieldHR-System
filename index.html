@@ -236,45 +236,18 @@
     .signal i:nth-child(2) { height: 10px; }
     .signal i:nth-child(3) { height: 13px; }
 
-    .wifi {
-      width: 16px;
-      height: 12px;
-      border: 3px solid currentColor;
-      border-left-color: transparent;
-      border-right-color: transparent;
-      border-bottom-color: transparent;
-      border-radius: 16px 16px 0 0;
-      transform: translateY(3px);
+    .wifi-icon {
+      width: 19px;
+      height: 19px;
+      font-size: 19px;
+      line-height: 1;
     }
 
-    .battery {
-      width: 24px;
-      height: 12px;
-      border: 2px solid currentColor;
-      border-radius: 4px;
-      position: relative;
-    }
-
-    .battery::after {
-      content: "";
-      position: absolute;
-      right: -5px;
-      top: 3px;
-      width: 3px;
-      height: 5px;
-      background: currentColor;
-      border-radius: 0 2px 2px 0;
-    }
-
-    .battery::before {
-      content: "";
-      position: absolute;
-      left: 2px;
-      top: 2px;
-      width: 15px;
-      height: 6px;
-      background: currentColor;
-      border-radius: 2px;
+    .battery-icon {
+      width: 23px;
+      height: 23px;
+      font-size: 23px;
+      line-height: 1;
     }
 
     .screen {
@@ -1961,6 +1934,27 @@
         background: #0b1f1a;
       }
 
+      .statusbar {
+        display: none;
+      }
+
+      .splash {
+        grid-template-rows: 1fr 80px;
+      }
+
+      .home-hero .top-actions,
+      .role-dashboard-hero .top-actions {
+        padding-top: max(18px, env(safe-area-inset-top));
+      }
+
+      .role-login-head {
+        padding-top: max(20px, env(safe-area-inset-top));
+      }
+
+      .page-header {
+        padding-top: max(10px, env(safe-area-inset-top));
+      }
+
       .stage {
         display: block;
         max-width: none;
@@ -3132,6 +3126,22 @@
     const homeSyncStatus = document.getElementById("homeSyncStatus");
     const homeSyncTitle = document.getElementById("homeSyncTitle");
     const homeSyncCopy = document.getElementById("homeSyncCopy");
+
+    document.querySelectorAll(".wifi").forEach(wifi => {
+      const icon = document.createElement("iconify-icon");
+      icon.className = "wifi-icon";
+      icon.setAttribute("icon", "lucide:wifi");
+      icon.setAttribute("aria-hidden", "true");
+      wifi.replaceWith(icon);
+    });
+
+    document.querySelectorAll(".battery").forEach(battery => {
+      const icon = document.createElement("iconify-icon");
+      icon.className = "battery-icon";
+      icon.setAttribute("icon", "lucide:battery-full");
+      icon.setAttribute("aria-hidden", "true");
+      battery.replaceWith(icon);
+    });
 
     let checkedIn = false;
     let offlineMode = false;
