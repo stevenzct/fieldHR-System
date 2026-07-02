@@ -75,16 +75,17 @@
 
     .stage {
       display: grid;
-      grid-template-columns: 420px minmax(280px, 440px);
+      grid-template-columns: minmax(280px, 390px) minmax(320px, 420px);
       gap: 28px;
-      align-items: center;
-      justify-content: center;
-      max-width: 980px;
+      place-items: center;
+      place-content: center;
+      max-width: 838px;
       width: 100%;
       height: 100%;
     }
 
     .notes {
+      width: 100%;
       background: rgba(255,255,255,.72);
       backdrop-filter: blur(18px);
       border: 1px solid rgba(226,235,231,.85);
@@ -94,11 +95,25 @@
       max-height: calc(100vh - 56px);
       max-height: calc(100dvh - 56px);
       overflow-y: auto;
-      scrollbar-width: none;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(6, 78, 59, .24) transparent;
     }
 
     .notes::-webkit-scrollbar {
-      display: none;
+      width: 5px;
+    }
+
+    .notes::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .notes::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      background: rgba(6, 78, 59, .22);
+    }
+
+    .notes::-webkit-scrollbar-thumb:hover {
+      background: rgba(6, 78, 59, .38);
     }
 
     .notes .eyebrow {
@@ -167,9 +182,11 @@
     }
 
     .phone {
-      width: min(100%, 390px);
-      height: min(844px, calc(100vh - 56px));
-      height: min(844px, calc(100dvh - 56px));
+      width: min(390px, calc(46.21vh - 25.88px));
+      width: min(390px, calc(46.21dvh - 25.88px));
+      height: auto;
+      aspect-ratio: 390 / 844;
+      container-type: inline-size;
       background: var(--bg);
       border: 10px solid #0b1f1a;
       border-radius: 48px;
@@ -267,14 +284,15 @@
     }
 
     .scroll {
-      height: calc(100% - 78px);
+      height: 100%;
       overflow-y: auto;
-      padding-bottom: 110px;
+      padding-bottom: 0;
       scrollbar-width: none;
     }
 
     .scroll::-webkit-scrollbar {
       width: 0;
+      height: 0;
       display: none;
     }
 
@@ -348,7 +366,7 @@
     .home-hero {
       color: white;
       min-height: 318px;
-      padding: 0 24px 30px;
+      padding: 0 24px 46px;
       background:
         radial-gradient(circle at 80% 12%, rgba(22,199,132,.28), transparent 32%),
         linear-gradient(150deg, var(--deep-2), #07563e 62%, var(--deep));
@@ -417,14 +435,27 @@
       align-items: center;
       gap: 8px;
       margin-top: 16px;
-      color: var(--primary-2);
+      color: #7cf0bd;
       font-size: 17px;
       font-weight: 850;
+      line-height: 1.35;
+      position: relative;
+      z-index: 3;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: currentColor;
+      box-shadow: 0 0 0 4px rgba(124,240,189,.12);
+      flex: 0 0 auto;
     }
 
     .content {
       padding: 0 24px;
-      margin-top: -54px;
+      padding-bottom: 120px;
+      margin-top: -34px;
       position: relative;
       z-index: 2;
     }
@@ -1908,6 +1939,232 @@
       font-weight: 700;
     }
 
+    @container (max-width: 350px) {
+      .statusbar {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .home-hero,
+      .role-dashboard-hero {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .home-hero {
+        min-height: 292px;
+      }
+
+      .hero-title {
+        margin-top: 34px;
+      }
+
+      .hero-title h1 {
+        font-size: 40px;
+        letter-spacing: -1.7px;
+      }
+
+      .content,
+      .page-body,
+      .dashboard-content,
+      .role-options {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .content {
+        margin-top: -30px;
+        padding-bottom: 104px;
+      }
+
+      .page-header {
+        grid-template-columns: 40px 1fr 40px;
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .page-header h2 {
+        font-size: 22px;
+      }
+
+      .outline-pill {
+        padding: 9px 12px;
+        font-size: 12px;
+      }
+
+      .big-btn {
+        padding: 14px 16px;
+        font-size: 16px;
+      }
+
+      .card,
+      .promo-card {
+        padding: 17px;
+      }
+
+      .promo-card {
+        min-height: 116px;
+      }
+
+      .promo-card h3 {
+        font-size: 19px;
+      }
+
+      .promo-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 19px;
+        font-size: 28px;
+      }
+
+      .section-title {
+        margin-top: 24px;
+        font-size: 23px;
+      }
+
+      .tool-grid {
+        gap: 10px;
+      }
+
+      .tool-card {
+        min-height: 100px;
+        padding: 14px;
+      }
+
+      .tool-icon {
+        width: 38px;
+        height: 38px;
+        margin-bottom: 10px;
+      }
+
+      .map-card {
+        height: 260px;
+      }
+
+      .route {
+        left: 26px;
+        width: 220px;
+        height: 138px;
+      }
+
+      .zone {
+        right: 24px;
+        width: 104px;
+        height: 104px;
+      }
+
+      .pin.one { left: 62px; top: 168px; }
+      .pin.two { right: 58px; top: 88px; }
+      .pin.three { left: 164px; top: 138px; }
+
+      .role-login-head {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .role-login-head h1,
+      .role-dashboard-title h1 {
+        font-size: 30px;
+      }
+
+      .role-option {
+        grid-template-columns: 46px 1fr 22px;
+        padding: 13px;
+      }
+
+      .role-option-icon {
+        width: 46px;
+        height: 46px;
+      }
+
+      .avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 22px;
+        font-size: 24px;
+      }
+
+      .avatar-row h2 {
+        font-size: 22px;
+      }
+
+      .profile-item {
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .profile-item strong {
+        max-width: none;
+        text-align: left;
+      }
+
+      .doc {
+        align-items: flex-start;
+      }
+
+      .doc-left {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .doc-left > span:last-child {
+        overflow-wrap: anywhere;
+      }
+
+      .dashboard-metric strong {
+        font-size: 20px;
+      }
+
+      .report-hero {
+        padding: 18px;
+      }
+
+      .report-hours strong {
+        font-size: 36px;
+      }
+
+      .nav {
+        height: calc(78px + env(safe-area-inset-bottom));
+        padding-bottom: calc(10px + env(safe-area-inset-bottom));
+      }
+
+      .toast {
+        left: 18px;
+        right: 18px;
+        bottom: 92px;
+      }
+    }
+
+    @media (min-width: 921px) {
+      body {
+        padding: 16px;
+      }
+
+      .stage {
+        width: 100%;
+        height: auto;
+        transform: none;
+        zoom: .8;
+      }
+
+      .phone {
+        width: 390px;
+        height: 844px;
+        box-shadow: 0 24px 52px rgba(8, 63, 50, .22);
+      }
+
+      .notes {
+        max-height: 844px;
+        box-shadow: 0 14px 34px rgba(6, 78, 59, .1);
+      }
+    }
+
+    @media (min-width: 921px) and (max-height: 719px) {
+      .stage {
+        zoom: .72;
+      }
+    }
+
     @media (max-width: 920px) {
       body {
         padding: 14px;
@@ -1923,8 +2180,9 @@
       }
 
       .phone {
-        height: min(844px, calc(100vh - 28px));
-        height: min(844px, calc(100dvh - 28px));
+        width: min(390px, calc(46.21vh - 12.94px));
+        width: min(390px, calc(46.21dvh - 12.94px));
+        height: auto;
       }
     }
 
@@ -1935,6 +2193,10 @@
       }
 
       .statusbar {
+        display: none;
+      }
+
+      .statusbar-spacer {
         display: none;
       }
 
@@ -1968,6 +2230,7 @@
         width: 100vw;
         height: 100vh;
         height: 100dvh;
+        aspect-ratio: auto;
         border: 0;
         border-radius: 0;
         box-shadow: none;
@@ -2014,7 +2277,7 @@
             </div>
 
             <div class="role-login-head">
-              <div style="height:42px"></div>
+              <div class="statusbar-spacer" style="height:42px"></div>
               <div class="role-login-brand">
                 <span class="mini-logo"><iconify-icon icon="lucide:badge-check" aria-hidden="true"></iconify-icon></span>
                 FieldHR
@@ -2077,7 +2340,7 @@
                 <small>Today’s Status</small>
                 <h1 id="statusTitle">Ready to<br />Check In</h1>
                 <div class="status-line">
-                  <span>●</span>
+                  <span class="status-dot" aria-hidden="true"></span>
                   <span id="statusSub">Assigned site: BGC Field Team</span>
                 </div>
               </div>
