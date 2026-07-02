@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FieldHR Mobile UX Prototype</title>
+  <script defer src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
   <style>
     :root {
       --deep: #064E3B;
@@ -29,8 +30,37 @@
       box-sizing: border-box;
     }
 
+    iconify-icon {
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      flex: 0 0 auto;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid rgba(22, 199, 132, .32);
+      outline-offset: 2px;
+    }
+
     body {
       margin: 0;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
       min-height: 100vh;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
@@ -40,6 +70,7 @@
       display: grid;
       place-items: center;
       padding: 28px;
+      overflow: hidden;
     }
 
     .stage {
@@ -47,8 +78,10 @@
       grid-template-columns: 420px minmax(280px, 440px);
       gap: 28px;
       align-items: center;
+      justify-content: center;
       max-width: 980px;
       width: 100%;
+      height: 100%;
     }
 
     .notes {
@@ -58,6 +91,14 @@
       border-radius: 34px;
       padding: 30px;
       box-shadow: var(--shadow);
+      max-height: calc(100vh - 56px);
+      max-height: calc(100dvh - 56px);
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+
+    .notes::-webkit-scrollbar {
+      display: none;
     }
 
     .notes .eyebrow {
@@ -104,6 +145,13 @@
       border: 1px solid var(--line);
       font-weight: 750;
       color: var(--text);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .feature:hover {
+      transform: translateX(4px);
+      border-color: rgba(22, 199, 132, .38);
+      box-shadow: 0 10px 24px rgba(6, 78, 59, .08);
     }
 
     .feature span:first-child {
@@ -115,11 +163,13 @@
       background: var(--mint-soft);
       color: var(--primary);
       flex: 0 0 auto;
+      font-size: 18px;
     }
 
     .phone {
       width: min(100%, 390px);
-      height: 844px;
+      height: min(844px, calc(100vh - 56px));
+      height: min(844px, calc(100dvh - 56px));
       background: var(--bg);
       border: 10px solid #0b1f1a;
       border-radius: 48px;
@@ -350,6 +400,14 @@
       display: grid;
       place-items: center;
       font-size: 20px;
+      cursor: pointer;
+      transition: background .2s ease, transform .2s ease;
+    }
+
+    .bell:hover,
+    .circle-btn:hover {
+      background: rgba(255,255,255,.16);
+      transform: translateY(-1px);
     }
 
     .outline-pill {
@@ -490,6 +548,25 @@
       font-weight: 1000;
       box-shadow: 0 16px 28px rgba(22,199,132,.24);
       cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+
+    .big-btn:hover {
+      transform: translateY(-2px);
+      filter: saturate(1.08);
+      box-shadow: 0 18px 32px rgba(22,199,132,.3);
+    }
+
+    .big-btn:active {
+      transform: translateY(0);
+    }
+
+    .big-btn:disabled {
+      cursor: not-allowed;
+      opacity: .58;
+      transform: none;
+      filter: none;
+      box-shadow: none;
     }
 
     .big-btn.secondary {
@@ -528,6 +605,9 @@
 
     .promo-card strong {
       font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .promo-icon {
@@ -561,6 +641,16 @@
       border-radius: 22px;
       padding: 16px;
       min-height: 108px;
+      text-align: left;
+      color: var(--text);
+      cursor: pointer;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(22, 199, 132, .42);
+      box-shadow: 0 14px 28px rgba(6, 78, 59, .09);
     }
 
     .tool-icon {
@@ -572,6 +662,7 @@
       background: var(--mint-soft);
       font-size: 21px;
       margin-bottom: 12px;
+      color: var(--deep);
     }
 
     .tool-card strong {
@@ -613,9 +704,17 @@
       border: 0;
       background: transparent;
       color: var(--deep);
-      font-size: 36px;
+      font-size: 23px;
       line-height: 1;
       cursor: pointer;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      transition: background .2s ease;
+    }
+
+    .back-btn:hover {
+      background: var(--mint-soft);
     }
 
     .page-body {
@@ -994,12 +1093,12 @@
       left: 0;
       right: 0;
       bottom: 0;
-      height: 86px;
+      height: calc(86px + env(safe-area-inset-bottom));
       background: rgba(255,255,255,.95);
       border-top: 1px solid var(--line);
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      padding: 8px 8px 16px;
+      padding: 8px 8px calc(16px + env(safe-area-inset-bottom));
       z-index: 20;
       backdrop-filter: blur(18px);
     }
@@ -1015,6 +1114,11 @@
       font-weight: 900;
       cursor: pointer;
       border-radius: 16px;
+      transition: color .2s ease, background .2s ease, transform .2s ease;
+    }
+
+    .nav button:active {
+      transform: scale(.96);
     }
 
     .nav button.active {
@@ -1025,6 +1129,8 @@
     .nav .icon {
       font-size: 22px;
       line-height: 1;
+      display: grid;
+      place-items: center;
     }
 
     .toast {
@@ -1053,6 +1159,782 @@
       color: white;
     }
 
+    .notification-wrap {
+      position: relative;
+    }
+
+    .notification-dot {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 10px;
+      height: 10px;
+      border: 2px solid var(--deep);
+      border-radius: 999px;
+      background: #fbbf24;
+    }
+
+    .live-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.92);
+      color: var(--deep);
+      font-size: 12px;
+      font-weight: 950;
+      box-shadow: 0 8px 20px rgba(6,78,59,.12);
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--primary);
+      box-shadow: 0 0 0 0 rgba(22,199,132,.45);
+      animation: livePulse 1.8s infinite;
+    }
+
+    @keyframes livePulse {
+      70% { box-shadow: 0 0 0 7px rgba(22,199,132,0); }
+      100% { box-shadow: 0 0 0 0 rgba(22,199,132,0); }
+    }
+
+    .action-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .small-btn {
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: white;
+      color: var(--deep);
+      padding: 12px 14px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .small-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(22,199,132,.45);
+      background: var(--mint-soft);
+    }
+
+    .small-btn.primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: var(--deep);
+    }
+
+    .small-btn.danger {
+      border-color: #fecaca;
+      background: #fff7f7;
+      color: #b91c1c;
+    }
+
+    .connection-card,
+    .access-note {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--mint-soft);
+      color: var(--deep);
+      margin-top: 14px;
+    }
+
+    .connection-card iconify-icon,
+    .access-note iconify-icon {
+      margin-top: 2px;
+      font-size: 21px;
+      color: var(--primary);
+    }
+
+    .connection-card strong,
+    .access-note strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 14px;
+    }
+
+    .connection-card small,
+    .access-note small {
+      display: block;
+      color: var(--muted);
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .connection-card.offline {
+      background: #fff7ed;
+      border-color: #fed7aa;
+    }
+
+    .connection-card.offline iconify-icon {
+      color: var(--warning);
+    }
+
+    .connection-card.invalid {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+
+    .connection-card.invalid iconify-icon {
+      color: var(--danger);
+    }
+
+    .auto-total {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 11px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .auto-total iconify-icon {
+      color: var(--primary);
+      font-size: 16px;
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      padding: 5px;
+      margin-bottom: 20px;
+      border-radius: 16px;
+      background: #edf4f1;
+    }
+
+    .segmented button {
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 6px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .segmented button.active {
+      background: white;
+      color: var(--deep);
+      box-shadow: 0 5px 14px rgba(6,78,59,.09);
+    }
+
+    .report-hero {
+      color: white;
+      background: linear-gradient(145deg, #0d5a45, var(--deep));
+      border-radius: 28px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .report-hero .tiny {
+      color: rgba(255,255,255,.68);
+    }
+
+    .report-hours {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin: 8px 0 18px;
+    }
+
+    .report-hours strong {
+      font-size: 42px;
+      letter-spacing: -1.6px;
+    }
+
+    .report-hours span {
+      color: rgba(255,255,255,.72);
+      font-weight: 800;
+    }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .report-metric {
+      padding: 12px 8px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      background: rgba(255,255,255,.08);
+      text-align: center;
+    }
+
+    .report-metric strong,
+    .report-metric span {
+      display: block;
+    }
+
+    .report-metric strong {
+      font-size: 21px;
+    }
+
+    .report-metric span {
+      margin-top: 3px;
+      color: rgba(255,255,255,.68);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .chart-card {
+      margin-top: 16px;
+    }
+
+    .bar-chart {
+      height: 150px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .bar-column {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .bar-column i {
+      width: 100%;
+      min-height: 8px;
+      border-radius: 8px 8px 4px 4px;
+      background: linear-gradient(180deg, var(--primary), #0da66d);
+    }
+
+    .notice-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .notice {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: white;
+    }
+
+    .notice.unread {
+      border-color: rgba(22,199,132,.34);
+      background: linear-gradient(135deg, #fff, var(--mint-soft));
+    }
+
+    .notice-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--mint-soft);
+      color: var(--deep);
+      font-size: 20px;
+    }
+
+    .notice-icon.warn {
+      background: #fff7ed;
+      color: #b45309;
+    }
+
+    .notice-icon.danger {
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .notice h3,
+    .notice p {
+      margin: 0;
+    }
+
+    .notice h3 {
+      font-size: 15px;
+    }
+
+    .notice p {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .notice time {
+      display: block;
+      margin-top: 8px;
+      color: #8ca098;
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .approval-card {
+      margin-top: 18px;
+    }
+
+    .approval-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .approval-meta div {
+      padding: 11px;
+      border-radius: 14px;
+      background: var(--bg);
+    }
+
+    .approval-meta span,
+    .approval-meta strong {
+      display: block;
+    }
+
+    .approval-meta span {
+      margin-bottom: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .approval-meta strong {
+      font-size: 13px;
+    }
+
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: #ecfdf5;
+      color: #047857;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .avatar-row .role-badge {
+      margin-top: 8px;
+    }
+
+    .role-login {
+      background: linear-gradient(165deg, #f8fcfa, #edf8f3);
+    }
+
+    .role-login-head {
+      padding: 20px 24px 28px;
+      color: white;
+      background:
+        radial-gradient(circle at 85% 10%, rgba(22,199,132,.3), transparent 32%),
+        linear-gradient(145deg, var(--deep-2), var(--deep));
+      border-radius: 0 0 34px 34px;
+    }
+
+    .role-login-brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      margin-bottom: 34px;
+      font-weight: 950;
+      font-size: 18px;
+    }
+
+    .role-login-brand .mini-logo {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: var(--primary);
+      color: var(--deep);
+      font-size: 20px;
+    }
+
+    .role-login-head h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.03;
+      letter-spacing: -1.3px;
+    }
+
+    .role-login-head p {
+      margin: 10px 0 0;
+      color: rgba(255,255,255,.72);
+      line-height: 1.45;
+      font-weight: 650;
+    }
+
+    .biometric-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 5px;
+      margin-bottom: 16px;
+      border-radius: 17px;
+      background: #eaf2ee;
+    }
+
+    .biometric-toggle button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border: 0;
+      border-radius: 13px;
+      padding: 11px 8px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: background .2s ease, color .2s ease, box-shadow .2s ease;
+    }
+
+    .biometric-toggle button iconify-icon {
+      font-size: 18px;
+    }
+
+    .biometric-toggle button.active {
+      background: white;
+      color: var(--deep);
+      box-shadow: 0 6px 16px rgba(6,78,59,.1);
+    }
+
+    .role-options {
+      display: grid;
+      gap: 12px;
+      padding: 22px 24px 120px;
+    }
+
+    .role-option {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 50px 1fr 26px;
+      align-items: center;
+      gap: 13px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 15px;
+      background: white;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(6,78,59,.06);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .role-option:hover {
+      transform: translateY(-2px);
+      border-color: rgba(22,199,132,.45);
+      box-shadow: 0 16px 30px rgba(6,78,59,.1);
+    }
+
+    .role-option-icon {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 17px;
+      background: var(--mint-soft);
+      color: var(--deep);
+      font-size: 24px;
+    }
+
+    .role-option[data-role="supervisor"] .role-option-icon {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .role-option[data-role="hr"] .role-option-icon {
+      background: #f5f3ff;
+      color: #6d28d9;
+    }
+
+    .role-option strong,
+    .role-option small {
+      display: block;
+    }
+
+    .role-option strong {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .role-option small {
+      color: var(--muted);
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    .role-option > iconify-icon {
+      color: #93a49d;
+      font-size: 20px;
+    }
+
+    .desktop-role-picker {
+      margin: 22px 0;
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.8);
+    }
+
+    .desktop-role-picker h2 {
+      margin: 0 0 4px;
+      font-size: 16px;
+      letter-spacing: -.3px;
+    }
+
+    .desktop-role-picker p {
+      margin: 0 0 13px;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .desktop-role-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .desktop-role-grid button {
+      display: grid;
+      justify-items: center;
+      gap: 6px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 5px;
+      background: white;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: border-color .2s ease, background .2s ease, color .2s ease;
+    }
+
+    .desktop-role-grid button iconify-icon {
+      font-size: 20px;
+    }
+
+    .desktop-role-grid button:hover,
+    .desktop-role-grid button.active {
+      border-color: rgba(22,199,132,.5);
+      background: var(--mint-soft);
+      color: var(--deep);
+    }
+
+    .role-dashboard {
+      background: var(--bg);
+    }
+
+    .role-dashboard-hero {
+      padding: 0 24px 28px;
+      color: white;
+      background:
+        radial-gradient(circle at 86% 16%, rgba(22,199,132,.25), transparent 34%),
+        linear-gradient(145deg, var(--deep-2), var(--deep));
+      border-radius: 0 0 34px 34px;
+    }
+
+    .role-dashboard-hero.hr {
+      background:
+        radial-gradient(circle at 86% 16%, rgba(196,181,253,.25), transparent 34%),
+        linear-gradient(145deg, #312e81, #4c1d95);
+    }
+
+    .role-dashboard-title {
+      margin-top: 28px;
+    }
+
+    .role-dashboard-title small {
+      color: rgba(255,255,255,.7);
+      font-weight: 800;
+    }
+
+    .role-dashboard-title h1 {
+      margin: 5px 0 0;
+      font-size: 34px;
+      letter-spacing: -1.2px;
+    }
+
+    .dashboard-content {
+      padding: 20px 24px 120px;
+    }
+
+    .dashboard-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      margin-bottom: 18px;
+    }
+
+    .dashboard-metric {
+      padding: 14px 8px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: white;
+      text-align: center;
+    }
+
+    .dashboard-metric strong,
+    .dashboard-metric span {
+      display: block;
+    }
+
+    .dashboard-metric strong {
+      font-size: 23px;
+      letter-spacing: -.7px;
+    }
+
+    .dashboard-metric span {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 15px;
+      margin-bottom: 18px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: var(--bg);
+      color: var(--muted);
+    }
+
+    .search-box iconify-icon {
+      font-size: 19px;
+    }
+
+    .search-box input {
+      min-width: 0;
+      flex: 1;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .people-list {
+      display: grid;
+      gap: 11px;
+    }
+
+    .person-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 48px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 19px;
+      background: white;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+
+    .person-row:hover {
+      transform: translateY(-2px);
+      border-color: rgba(22,199,132,.42);
+      box-shadow: 0 12px 24px rgba(6,78,59,.08);
+    }
+
+    .person-avatar {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(145deg, var(--primary), var(--mint));
+      color: var(--deep);
+      font-size: 14px;
+      font-weight: 1000;
+    }
+
+    .person-row strong,
+    .person-row small {
+      display: block;
+    }
+
+    .person-row strong {
+      font-size: 15px;
+    }
+
+    .person-row small {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .person-row > iconify-icon {
+      color: #93a49d;
+      font-size: 19px;
+    }
+
+    .empty-state {
+      padding: 28px 18px;
+      border: 1px dashed #cbdad4;
+      border-radius: 20px;
+      background: var(--bg);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .empty-state iconify-icon {
+      display: block;
+      margin: 0 auto 10px;
+      color: #8ca098;
+      font-size: 30px;
+    }
+
+    .empty-state strong,
+    .empty-state small {
+      display: block;
+    }
+
+    .empty-state strong {
+      color: var(--deep);
+      font-size: 15px;
+    }
+
+    .empty-state small {
+      margin-top: 5px;
+      font-weight: 700;
+    }
+
     @media (max-width: 920px) {
       body {
         padding: 14px;
@@ -1060,15 +1942,16 @@
 
       .stage {
         grid-template-columns: 1fr;
+        place-items: center;
       }
 
       .notes {
-        order: 2;
+        display: none;
       }
 
       .phone {
-        order: 1;
         height: min(844px, calc(100vh - 28px));
+        height: min(844px, calc(100dvh - 28px));
       }
     }
 
@@ -1090,6 +1973,7 @@
       .phone {
         width: 100vw;
         height: 100vh;
+        height: 100dvh;
         border: 0;
         border-radius: 0;
         box-shadow: none;
@@ -1116,12 +2000,63 @@
           </div>
 
           <div class="brand">
-            <div class="logo-mark">✓</div>
+            <div class="logo-mark"><iconify-icon icon="lucide:badge-check" aria-hidden="true"></iconify-icon></div>
             <h2>FieldHR</h2>
             <p>Attendance, location, and payroll ready.</p>
           </div>
 
           <div class="loading-pill" aria-label="Loading"></div>
+        </section>
+
+        <section class="screen role-login" data-screen="login">
+          <div class="scroll" style="height:100%;padding-bottom:0;">
+            <div class="statusbar top-safe" style="position:absolute;left:0;right:0;">
+              <span>9:41</span>
+              <span class="status-icons">
+                <span class="signal"><i></i><i></i><i></i></span>
+                <span class="wifi"></span>
+                <span class="battery"></span>
+              </span>
+            </div>
+
+            <div class="role-login-head">
+              <div style="height:42px"></div>
+              <div class="role-login-brand">
+                <span class="mini-logo"><iconify-icon icon="lucide:badge-check" aria-hidden="true"></iconify-icon></span>
+                FieldHR
+              </div>
+              <h1>Welcome.<br />Choose your role.</h1>
+              <p>Explore the attendance system from the perspective that matches your work.</p>
+            </div>
+
+            <div class="role-options">
+              <button class="role-option" type="button" data-role="employee">
+                <span class="role-option-icon"><iconify-icon icon="lucide:hard-hat" aria-hidden="true"></iconify-icon></span>
+                <span><strong>Employee</strong><small>Check in, file leave, and view personal records</small></span>
+                <iconify-icon icon="lucide:arrow-right" aria-hidden="true"></iconify-icon>
+              </button>
+
+              <button class="role-option" type="button" data-role="supervisor">
+                <span class="role-option-icon"><iconify-icon icon="lucide:users-round" aria-hidden="true"></iconify-icon></span>
+                <span><strong>Supervisor</strong><small>Monitor field teams, alerts, and approvals</small></span>
+                <iconify-icon icon="lucide:arrow-right" aria-hidden="true"></iconify-icon>
+              </button>
+
+              <button class="role-option" type="button" data-role="hr">
+                <span class="role-option-icon"><iconify-icon icon="lucide:briefcase-business" aria-hidden="true"></iconify-icon></span>
+                <span><strong>HR Administrator</strong><small>Manage employees, reports, and payroll records</small></span>
+                <iconify-icon icon="lucide:arrow-right" aria-hidden="true"></iconify-icon>
+              </button>
+
+              <aside class="access-note" style="margin-top:2px;">
+                <iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong>Prototype access</strong>
+                  <small>No password is required in demo mode. A production system would authenticate the account and assign its role securely.</small>
+                </div>
+              </aside>
+            </div>
+          </div>
         </section>
 
         <section class="screen" data-screen="home">
@@ -1137,8 +2072,11 @@
               </div>
 
               <div class="top-actions">
-                <button class="bell" type="button" aria-label="Notifications">⌁</button>
-                <button class="outline-pill" type="button">On Duty</button>
+                <button class="bell notification-wrap" type="button" data-go="alerts" aria-label="Notifications">
+                  <iconify-icon icon="lucide:bell" aria-hidden="true"></iconify-icon>
+                  <span class="notification-dot" data-dot-role="employee" aria-hidden="true"></span>
+                </button>
+                <button class="outline-pill" type="button" data-go="login">Employee · Switch</button>
               </div>
 
               <div class="hero-title">
@@ -1172,39 +2110,62 @@
                 <button class="big-btn" id="checkButton" type="button">Check In Now</button>
               </article>
 
+              <article class="connection-card offline" id="homeSyncStatus" hidden>
+                <iconify-icon icon="lucide:cloud-off" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong id="homeSyncTitle">Saved securely offline</strong>
+                  <small id="homeSyncCopy">Attendance is queued and will upload automatically when signal returns.</small>
+                </div>
+              </article>
+
               <article class="promo-card">
                 <div>
                   <h3>Biometric check-in keeps attendance secure.</h3>
-                  <strong>Fingerprint / Face verification ›</strong>
+                  <strong>
+                    Fingerprint / Face verification
+                    <iconify-icon icon="lucide:arrow-right" aria-hidden="true"></iconify-icon>
+                  </strong>
                 </div>
-                <div class="promo-icon">☘</div>
+                <div class="promo-icon"><iconify-icon icon="lucide:scan-face" aria-hidden="true"></iconify-icon></div>
               </article>
 
               <h2 class="section-title">HR Tools</h2>
 
               <div class="tool-grid">
                 <button class="tool-card" type="button" data-go="attendance">
-                  <div class="tool-icon">◷</div>
+                  <div class="tool-icon"><iconify-icon icon="lucide:calendar-clock" aria-hidden="true"></iconify-icon></div>
                   <strong>Attendance History</strong>
                   <small>View daily logs</small>
                 </button>
 
                 <button class="tool-card" type="button" data-go="leave">
-                  <div class="tool-icon">✚</div>
+                  <div class="tool-icon"><iconify-icon icon="lucide:calendar-plus" aria-hidden="true"></iconify-icon></div>
                   <strong>Leave Filing</strong>
                   <small>Submit request</small>
                 </button>
 
                 <button class="tool-card" type="button" data-go="map">
-                  <div class="tool-icon">⌖</div>
-                  <strong>Live Location</strong>
-                  <small>Field tracking</small>
+                  <div class="tool-icon"><iconify-icon icon="lucide:map-pinned" aria-hidden="true"></iconify-icon></div>
+                  <strong>My Location</strong>
+                  <small>Work area & sharing</small>
                 </button>
 
                 <button class="tool-card" type="button" data-go="profile">
-                  <div class="tool-icon">□</div>
-                  <strong>201 File</strong>
-                  <small>Employee records</small>
+                  <div class="tool-icon"><iconify-icon icon="lucide:folder-lock" aria-hidden="true"></iconify-icon></div>
+                  <strong>My Records</strong>
+                  <small>Attendance & leave</small>
+                </button>
+
+                <button class="tool-card" type="button" data-go="reports">
+                  <div class="tool-icon"><iconify-icon icon="lucide:chart-no-axes-combined" aria-hidden="true"></iconify-icon></div>
+                  <strong>Reports</strong>
+                  <small>Payroll summaries</small>
+                </button>
+
+                <button class="tool-card" type="button" data-go="alerts">
+                  <div class="tool-icon"><iconify-icon icon="lucide:bell-ring" aria-hidden="true"></iconify-icon></div>
+                  <strong>Alerts</strong>
+                  <small>Reminders & approvals</small>
                 </button>
               </div>
             </div>
@@ -1223,24 +2184,47 @@
             </div>
 
             <header class="page-header">
-              <button class="back-btn" type="button" data-go="home">‹</button>
-              <h2>Secure Check-In</h2>
+              <button class="back-btn" type="button" data-go="home" aria-label="Back to home">
+                <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+              </button>
+              <h2 id="checkinPageTitle">Secure Check-In</h2>
               <span></span>
             </header>
 
             <div class="page-body">
+              <div class="biometric-toggle" aria-label="Choose biometric method">
+                <button class="active" type="button" data-biometric="fingerprint">
+                  <iconify-icon icon="lucide:fingerprint" aria-hidden="true"></iconify-icon>
+                  Fingerprint
+                </button>
+                <button type="button" data-biometric="face">
+                  <iconify-icon icon="lucide:scan-face" aria-hidden="true"></iconify-icon>
+                  Face Scan
+                </button>
+              </div>
+
               <article class="verify-box">
-                <div class="finger">⌾</div>
-                <h1>Verify Identity</h1>
-                <p>Prototype simulation for fingerprint or face check-in.</p>
+                <div class="finger"><iconify-icon id="biometricIcon" icon="lucide:fingerprint" aria-hidden="true"></iconify-icon></div>
+                <h1 id="biometricTitle">Touch Sensor</h1>
+                <p id="biometricCopy">Place your registered finger on the phone sensor to verify your identity.</p>
               </article>
+
+              <article class="connection-card" id="locationCheckCard">
+                <iconify-icon icon="lucide:map-pinned" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong id="locationCheckTitle">Inside assigned work area</strong>
+                  <small id="locationCheckCopy">BGC Field Team · GPS accuracy 8 meters</small>
+                </div>
+              </article>
+              <div style="height:10px"></div>
+              <button class="small-btn" id="toggleWrongLocation" type="button">Simulate Wrong Location</button>
 
               <div class="steps">
                 <div class="step">
                   <div class="dot">1</div>
                   <div>
                     <strong>Biometric Verification</strong>
-                    <small>Confirms that the logged-in employee is the one checking in.</small>
+                    <small>Matches the fingerprint or face registered to this employee account, preventing another person from recording attendance.</small>
                   </div>
                 </div>
 
@@ -1262,7 +2246,17 @@
               </div>
 
               <div style="height:18px"></div>
-              <button class="big-btn dark" id="simulateVerify" type="button">Simulate Verified Check-In</button>
+              <article class="connection-card" id="checkinConnection">
+                <iconify-icon icon="lucide:wifi" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong id="connectionTitle">Online and ready</strong>
+                  <small id="connectionCopy">Your attendance will be uploaded immediately.</small>
+                </div>
+              </article>
+              <div style="height:10px"></div>
+              <button class="small-btn" id="toggleOffline" type="button">Simulate Poor Signal</button>
+              <div style="height:10px"></div>
+              <button class="big-btn dark" id="simulateVerify" type="button">Verify with Fingerprint</button>
             </div>
           </div>
         </section>
@@ -1279,7 +2273,9 @@
             </div>
 
             <header class="page-header">
-              <button class="back-btn" type="button" data-go="home">‹</button>
+              <button class="back-btn" type="button" data-go="home" aria-label="Back to home">
+                <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+              </button>
               <h2>Attendance</h2>
               <span></span>
             </header>
@@ -1299,7 +2295,7 @@
                 <article class="record">
                   <div class="date">
                     <strong>Today, Jul 2</strong>
-                    <span class="chip">Pending</span>
+                    <span class="chip" id="historyTodayStatus">Pending</span>
                   </div>
                   <div class="times">
                     <div class="time-box">
@@ -1308,9 +2304,10 @@
                     </div>
                     <div class="time-box">
                       <span>Check Out</span>
-                      <strong>--:--</strong>
+                      <strong id="historyTodayOut">--:--</strong>
                     </div>
                   </div>
+                  <div class="auto-total"><iconify-icon icon="lucide:clock-3" aria-hidden="true"></iconify-icon><span id="historyTodayTotal">Calculated automatically after check-out</span></div>
                 </article>
 
                 <article class="record">
@@ -1328,6 +2325,7 @@
                       <strong>5:04 PM</strong>
                     </div>
                   </div>
+                  <div class="auto-total"><iconify-icon icon="lucide:clock-3" aria-hidden="true"></iconify-icon>9h 06m · Automatically recorded</div>
                 </article>
 
                 <article class="record">
@@ -1345,6 +2343,7 @@
                       <strong>5:10 PM</strong>
                     </div>
                   </div>
+                  <div class="auto-total"><iconify-icon icon="lucide:clock-3" aria-hidden="true"></iconify-icon>8h 54m · Automatically recorded</div>
                 </article>
 
                 <article class="record">
@@ -1362,6 +2361,25 @@
                       <strong>5:01 PM</strong>
                     </div>
                   </div>
+                  <div class="auto-total"><iconify-icon icon="lucide:clock-3" aria-hidden="true"></iconify-icon>9h 09m · Automatically recorded</div>
+                </article>
+
+                <article class="record">
+                  <div class="date">
+                    <strong>Thu, Jun 26</strong>
+                    <span class="chip danger">Absent</span>
+                  </div>
+                  <div class="times">
+                    <div class="time-box">
+                      <span>Check In</span>
+                      <strong>Missed</strong>
+                    </div>
+                    <div class="time-box">
+                      <span>Supervisor</span>
+                      <strong>Notified</strong>
+                    </div>
+                  </div>
+                  <div class="auto-total"><iconify-icon icon="lucide:clock-3" aria-hidden="true"></iconify-icon>0h · Absence recorded automatically</div>
                 </article>
               </div>
             </div>
@@ -1380,39 +2398,54 @@
             </div>
 
             <header class="page-header">
-              <button class="back-btn" type="button" data-go="home">‹</button>
-              <h2>Team Map</h2>
+              <button class="back-btn" type="button" data-go="home" aria-label="Back to home">
+                <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+              </button>
+              <h2 id="mapTitle">My Work Area</h2>
               <span></span>
             </header>
 
             <div class="page-body">
               <div class="map-card">
+                <span class="live-badge"><span class="live-dot"></span> <span id="mapLiveLabel">My location · Live</span></span>
                 <div class="route"></div>
                 <div class="zone">Assigned<br />Area</div>
                 <div class="pin one"><span>S</span></div>
-                <div class="pin two"><span>M</span></div>
-                <div class="pin three"><span>!</span></div>
+                <div class="pin two" data-management-only><span>M</span></div>
+                <div class="pin three" data-management-only><span>!</span></div>
               </div>
 
-              <article class="card alert-card">
+              <article class="card alert-card" data-management-only>
                 <div class="card-head">
                   <h3>Location Alert</h3>
                   <span class="chip danger">1 Outside</span>
                 </div>
                 <p class="muted" style="line-height:1.45;margin:12px 0 0;font-weight:700;">
-                  Mark Reyes left the assigned area 6 minutes ago. Supervisor notification is ready.
+                  Mark Reyes left the assigned area 6 minutes ago. Supervisor notification was sent automatically.
+                </p>
+                <div style="height:14px"></div>
+                <button class="small-btn danger" id="simulateGeofence" type="button">Simulate Geofence Alert</button>
+              </article>
+
+              <article class="card alert-card" data-employee-only>
+                <div class="card-head">
+                  <h3>Location sharing active</h3>
+                  <span class="chip">Inside Area</span>
+                </div>
+                <p class="muted" style="line-height:1.45;margin:12px 0 0;font-weight:700;">
+                  Your location is shared only while you are on duty. Last secure update: just now.
                 </p>
               </article>
 
-              <h2 class="section-title">Field Employees</h2>
+              <h2 class="section-title" data-management-only>Field Employees</h2>
 
-              <div class="history-list">
+              <div class="history-list" data-management-only>
                 <article class="record">
                   <div class="date">
                     <strong>Steve Cabugos</strong>
                     <span class="chip">Inside Area</span>
                   </div>
-                  <span class="muted" style="font-weight:750;">Last update: 1 min ago</span>
+                  <span class="muted live-update" style="font-weight:750;">Last update: just now</span>
                 </article>
 
                 <article class="record">
@@ -1420,7 +2453,7 @@
                     <strong>Maria Santos</strong>
                     <span class="chip">Inside Area</span>
                   </div>
-                  <span class="muted" style="font-weight:750;">Last update: 2 mins ago</span>
+                  <span class="muted live-update" style="font-weight:750;">Last update: just now</span>
                 </article>
 
                 <article class="record">
@@ -1428,7 +2461,7 @@
                     <strong>Mark Reyes</strong>
                     <span class="chip danger">Outside Area</span>
                   </div>
-                  <span class="muted" style="font-weight:750;">Last update: 6 mins ago</span>
+                  <span class="muted live-update" style="font-weight:750;">Last update: just now</span>
                 </article>
               </div>
             </div>
@@ -1447,7 +2480,9 @@
             </div>
 
             <header class="page-header">
-              <button class="back-btn" type="button" data-go="home">‹</button>
+              <button class="back-btn" type="button" data-go="home" aria-label="Back to home">
+                <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+              </button>
               <h2>Leave Filing</h2>
               <span></span>
             </header>
@@ -1522,37 +2557,69 @@
             </div>
 
             <header class="page-header">
-              <button class="back-btn" type="button" data-go="home">‹</button>
-              <h2>201 File</h2>
+              <button class="back-btn" id="profileBack" type="button" data-go="home" aria-label="Back">
+                <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+              </button>
+              <h2 id="profileTitle">My Profile</h2>
               <span></span>
             </header>
 
             <div class="page-body">
               <div class="avatar-row">
-                <div class="avatar">SC</div>
+                <div class="avatar" id="profileAvatar">SC</div>
                 <div>
-                  <h2>Steve Cabugos</h2>
-                  <p>Field Operations Staff</p>
+                  <h2 id="profileName">Steve Cabugos</h2>
+                  <p id="profilePosition">Field Operations Staff</p>
+                  <span class="role-badge" id="profileAccessBadge"><iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon> Own record</span>
                 </div>
               </div>
 
-              <article class="card flat" style="margin-bottom:22px;">
+              <aside class="access-note" data-management-only>
+                <iconify-icon icon="lucide:lock-keyhole" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong id="profileAccessTitle">Protected employee record</strong>
+                  <small id="profileAccessCopy">You can view your own details. Full 201 file access is restricted to authorized HR and management accounts.</small>
+                </div>
+              </aside>
+
+              <aside class="access-note" data-employee-only>
+                <iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong>Your employee account</strong>
+                  <small>Use this area to review your own attendance and leave status. Complete 201 files remain restricted to authorized management and HR.</small>
+                </div>
+              </aside>
+
+              <div style="height:16px"></div>
+
+              <div class="tool-grid" data-employee-only style="margin-bottom:22px;">
+                <button class="tool-card" type="button" data-go="attendance">
+                  <div class="tool-icon"><iconify-icon icon="lucide:calendar-clock" aria-hidden="true"></iconify-icon></div>
+                  <strong>Attendance</strong><small>History & work hours</small>
+                </button>
+                <button class="tool-card" type="button" data-go="leave">
+                  <div class="tool-icon"><iconify-icon icon="lucide:calendar-check-2" aria-hidden="true"></iconify-icon></div>
+                  <strong>Leave Status</strong><small>Requests & balances</small>
+                </button>
+              </div>
+
+              <article class="card flat" data-management-only style="margin-bottom:22px;">
                 <div class="profile-list">
                   <div class="profile-item">
                     <span>Employee ID</span>
-                    <strong>EMP-001</strong>
+                    <strong id="profileEmployeeId">EMP-001</strong>
                   </div>
                   <div class="profile-item">
                     <span>Department</span>
-                    <strong>Field Operations</strong>
+                    <strong id="profileDepartment">Field Operations</strong>
                   </div>
                   <div class="profile-item">
                     <span>Date Hired</span>
-                    <strong>Jan 08, 2026</strong>
+                    <strong id="profileHired">Jan 08, 2026</strong>
                   </div>
                   <div class="profile-item">
                     <span>Emergency Contact</span>
-                    <strong>Maria Cabugos<br />0917 000 0000</strong>
+                    <strong id="profileEmergency">Maria Cabugos<br />0917 000 0000</strong>
                   </div>
                   <div class="profile-item">
                     <span>Payroll Link</span>
@@ -1561,12 +2628,12 @@
                 </div>
               </article>
 
-              <h2 class="section-title">Documents</h2>
+              <h2 class="section-title" data-management-only>Documents</h2>
 
-              <div class="doc-grid">
+              <div class="doc-grid" data-management-only>
                 <div class="doc">
                   <div class="doc-left">
-                    <span class="doc-icon">▣</span>
+                    <span class="doc-icon"><iconify-icon icon="lucide:id-card" aria-hidden="true"></iconify-icon></span>
                     <span>Government ID</span>
                   </div>
                   <span class="chip">Uploaded</span>
@@ -1574,7 +2641,7 @@
 
                 <div class="doc">
                   <div class="doc-left">
-                    <span class="doc-icon">▤</span>
+                    <span class="doc-icon"><iconify-icon icon="lucide:file-text" aria-hidden="true"></iconify-icon></span>
                     <span>Employment Contract</span>
                   </div>
                   <span class="chip">Uploaded</span>
@@ -1582,7 +2649,7 @@
 
                 <div class="doc">
                   <div class="doc-left">
-                    <span class="doc-icon">□</span>
+                    <span class="doc-icon"><iconify-icon icon="lucide:award" aria-hidden="true"></iconify-icon></span>
                     <span>Certificates</span>
                   </div>
                   <span class="chip warn">Missing</span>
@@ -1592,30 +2659,420 @@
           </div>
         </section>
 
+        <section class="screen role-dashboard" data-screen="supervisor-home">
+          <div class="scroll">
+            <div class="role-dashboard-hero">
+              <div class="statusbar top-safe" style="padding-left:0;padding-right:0;">
+                <span>9:41</span>
+                <span class="status-icons">
+                  <span class="signal"><i></i><i></i><i></i></span>
+                  <span class="wifi"></span>
+                  <span class="battery"></span>
+                </span>
+              </div>
+              <div class="top-actions">
+                <button class="bell notification-wrap" type="button" data-go="alerts" aria-label="Supervisor alerts">
+                  <iconify-icon icon="lucide:bell" aria-hidden="true"></iconify-icon>
+                  <span class="notification-dot" data-dot-role="supervisor" aria-hidden="true"></span>
+                </button>
+                <button class="outline-pill" type="button" data-go="login">Supervisor · Switch</button>
+              </div>
+              <div class="role-dashboard-title">
+                <small>Field Operations</small>
+                <h1>Good morning,<br />Alex.</h1>
+              </div>
+            </div>
+
+            <div class="dashboard-content">
+              <div class="dashboard-metrics">
+                <div class="dashboard-metric"><strong>18</strong><span>On duty</span></div>
+                <div class="dashboard-metric"><strong style="color:var(--danger);">2</strong><span>Alerts</span></div>
+                <div class="dashboard-metric"><strong>3</strong><span>Approvals</span></div>
+              </div>
+
+              <article class="card">
+                <div class="card-head">
+                  <div>
+                    <span class="tiny muted">Needs Attention</span>
+                    <h3 style="margin-top:4px;">Mark left assigned area</h3>
+                  </div>
+                  <span class="chip danger">Live</span>
+                </div>
+                <p class="muted" style="font-size:13px;font-weight:700;line-height:1.45;">Outside the BGC geofence for 6 minutes. Review the employee location and contact status.</p>
+                <div class="action-row">
+                  <button class="small-btn" type="button" data-go="alerts">View Alert</button>
+                  <button class="small-btn primary" type="button" data-go="map">Open Map</button>
+                </div>
+              </article>
+
+              <h2 class="section-title">Supervisor Tools</h2>
+              <div class="tool-grid">
+                <button class="tool-card" type="button" data-go="map">
+                  <div class="tool-icon"><iconify-icon icon="lucide:map-pinned" aria-hidden="true"></iconify-icon></div>
+                  <strong>Team Map</strong><small>18 employees live</small>
+                </button>
+                <button class="tool-card" type="button" data-go="alerts">
+                  <div class="tool-icon"><iconify-icon icon="lucide:clipboard-check" aria-hidden="true"></iconify-icon></div>
+                  <strong>Approvals</strong><small>3 waiting</small>
+                </button>
+                <button class="tool-card" type="button" data-go="reports">
+                  <div class="tool-icon"><iconify-icon icon="lucide:chart-no-axes-combined" aria-hidden="true"></iconify-icon></div>
+                  <strong>Team Reports</strong><small>Weekly summary</small>
+                </button>
+                <button class="tool-card" type="button" data-go="people">
+                  <div class="tool-icon"><iconify-icon icon="lucide:users-round" aria-hidden="true"></iconify-icon></div>
+                  <strong>Employees</strong><small>Team directory</small>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen role-dashboard" data-screen="hr-home">
+          <div class="scroll">
+            <div class="role-dashboard-hero hr">
+              <div class="statusbar top-safe" style="padding-left:0;padding-right:0;">
+                <span>9:41</span>
+                <span class="status-icons">
+                  <span class="signal"><i></i><i></i><i></i></span>
+                  <span class="wifi"></span>
+                  <span class="battery"></span>
+                </span>
+              </div>
+              <div class="top-actions">
+                <button class="bell notification-wrap" type="button" data-go="alerts" aria-label="HR alerts">
+                  <iconify-icon icon="lucide:bell" aria-hidden="true"></iconify-icon>
+                  <span class="notification-dot" data-dot-role="hr" aria-hidden="true"></span>
+                </button>
+                <button class="outline-pill" type="button" data-go="login">HR · Switch</button>
+              </div>
+              <div class="role-dashboard-title">
+                <small>People Operations</small>
+                <h1>HR workspace<br />overview.</h1>
+              </div>
+            </div>
+
+            <div class="dashboard-content">
+              <div class="dashboard-metrics">
+                <div class="dashboard-metric"><strong>124</strong><span>Employees</span></div>
+                <div class="dashboard-metric"><strong>7</strong><span>Pending</span></div>
+                <div class="dashboard-metric"><strong>96%</strong><span>On-time</span></div>
+              </div>
+
+              <article class="card" style="background:linear-gradient(145deg,#f5f3ff,#fff);">
+                <div class="card-head">
+                  <div>
+                    <span class="tiny muted">Payroll Cycle</span>
+                    <h3 style="margin-top:4px;">July 1–15 attendance</h3>
+                  </div>
+                  <span class="chip">Ready</span>
+                </div>
+                <p class="muted" style="font-size:13px;font-weight:700;line-height:1.45;">118 verified records are ready. Six exceptions require HR review before payroll export.</p>
+                <button class="small-btn primary" type="button" data-go="reports">Review Payroll Summary</button>
+              </article>
+
+              <h2 class="section-title">HR Tools</h2>
+              <div class="tool-grid">
+                <button class="tool-card" type="button" data-go="people">
+                  <div class="tool-icon"><iconify-icon icon="lucide:folder-lock" aria-hidden="true"></iconify-icon></div>
+                  <strong>201 Files</strong><small>Protected records</small>
+                </button>
+                <button class="tool-card" type="button" data-go="reports">
+                  <div class="tool-icon"><iconify-icon icon="lucide:wallet-cards" aria-hidden="true"></iconify-icon></div>
+                  <strong>Payroll Reports</strong><small>Ready for review</small>
+                </button>
+                <button class="tool-card" type="button" data-go="alerts">
+                  <div class="tool-icon"><iconify-icon icon="lucide:clipboard-check" aria-hidden="true"></iconify-icon></div>
+                  <strong>Approvals</strong><small>7 pending</small>
+                </button>
+                <button class="tool-card" type="button" data-go="attendance">
+                  <div class="tool-icon"><iconify-icon icon="lucide:calendar-check-2" aria-hidden="true"></iconify-icon></div>
+                  <strong>Attendance</strong><small>Company records</small>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen screen-page" data-screen="people">
+          <div class="scroll">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span class="status-icons">
+                <span class="signal"><i></i><i></i><i></i></span>
+                <span class="wifi"></span>
+                <span class="battery"></span>
+              </span>
+            </div>
+
+            <header class="page-header">
+              <button class="back-btn" type="button" data-go="home" aria-label="Back to dashboard">
+                <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+              </button>
+              <h2 id="peopleTitle">Employees</h2>
+              <button class="back-btn" id="peopleFilter" type="button" aria-label="Filter employees">
+                <iconify-icon icon="lucide:list-filter" aria-hidden="true"></iconify-icon>
+              </button>
+            </header>
+
+            <div class="page-body">
+              <div class="search-box">
+                <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
+                <input id="peopleSearch" type="search" aria-label="Search employees" placeholder="Search employee or ID" />
+              </div>
+
+              <div class="row" style="margin-bottom:14px;">
+                <div>
+                  <span class="tiny muted" id="peopleScope">Field Operations</span>
+                  <h2 style="margin:4px 0 0;font-size:24px;" id="peopleCount">18 Employees</h2>
+                </div>
+                <span class="role-badge"><iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon> Authorized</span>
+              </div>
+
+              <div class="people-list">
+                <button class="person-row" type="button" data-go="profile" data-person="steve">
+                  <span class="person-avatar">SC</span>
+                  <span><strong>Steve Cabugos</strong><small>EMP-001 · Field Operations</small></span>
+                  <iconify-icon icon="lucide:chevron-right" aria-hidden="true"></iconify-icon>
+                </button>
+                <button class="person-row" type="button" data-go="profile" data-person="maria">
+                  <span class="person-avatar">MS</span>
+                  <span><strong>Maria Santos</strong><small>EMP-014 · Field Operations</small></span>
+                  <iconify-icon icon="lucide:chevron-right" aria-hidden="true"></iconify-icon>
+                </button>
+                <button class="person-row" type="button" data-go="profile" data-person="mark">
+                  <span class="person-avatar">MR</span>
+                  <span><strong>Mark Reyes</strong><small>EMP-019 · Field Operations</small></span>
+                  <iconify-icon icon="lucide:chevron-right" aria-hidden="true"></iconify-icon>
+                </button>
+                <button class="person-row" type="button" data-go="profile" data-person="john">
+                  <span class="person-avatar">JC</span>
+                  <span><strong>John Cruz</strong><small>EMP-028 · Logistics</small></span>
+                  <iconify-icon icon="lucide:chevron-right" aria-hidden="true"></iconify-icon>
+                </button>
+
+                <div class="empty-state" id="peopleEmpty" hidden>
+                  <iconify-icon icon="lucide:search" aria-hidden="true"></iconify-icon>
+                  <strong>No employees found</strong>
+                  <small>Try a name, employee ID, or department.</small>
+                </div>
+              </div>
+
+              <aside class="access-note">
+                <iconify-icon icon="lucide:shield-alert" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong>Access is recorded</strong>
+                  <small>Opening a 201 file creates an audit entry for employee privacy and compliance review.</small>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen screen-page" data-screen="reports">
+          <div class="scroll">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span class="status-icons">
+                <span class="signal"><i></i><i></i><i></i></span>
+                <span class="wifi"></span>
+                <span class="battery"></span>
+              </span>
+            </div>
+
+            <header class="page-header">
+              <button class="back-btn" type="button" data-go="home" aria-label="Back to home">
+                <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+              </button>
+              <h2 id="reportsTitle">My Reports</h2>
+              <span></span>
+            </header>
+
+            <div class="page-body">
+              <div class="segmented" aria-label="Report period">
+                <button type="button" data-period="daily">Daily</button>
+                <button type="button" data-period="weekly">Weekly</button>
+                <button class="active" type="button" data-period="monthly">Monthly</button>
+              </div>
+
+              <article class="report-hero">
+                <div class="row">
+                  <span class="tiny" id="reportLabel">July 2026 Summary</span>
+                  <span class="role-badge" id="reportScopeBadge"><iconify-icon icon="lucide:badge-check" aria-hidden="true"></iconify-icon> Payroll linked</span>
+                </div>
+                <div class="report-hours">
+                  <strong id="reportHours">176.5</strong>
+                  <span>work hours</span>
+                </div>
+                <div class="report-grid">
+                  <div class="report-metric"><strong id="reportPresent">22</strong><span>Present</span></div>
+                  <div class="report-metric"><strong id="reportLate">1</strong><span>Late</span></div>
+                  <div class="report-metric"><strong id="reportAbsent">1</strong><span>Absent</span></div>
+                </div>
+              </article>
+
+              <article class="card flat chart-card">
+                <div class="card-head">
+                  <div>
+                    <span class="tiny muted">Hours Overview</span>
+                    <h3 style="margin-top:4px;" id="chartTitle">Last 6 weeks</h3>
+                  </div>
+                  <span class="chip">96% on-time</span>
+                </div>
+                <div class="bar-chart" id="reportChart" aria-label="Attendance hours bar chart">
+                  <div class="bar-column"><i style="height:72%"></i><span>W1</span></div>
+                  <div class="bar-column"><i style="height:88%"></i><span>W2</span></div>
+                  <div class="bar-column"><i style="height:78%"></i><span>W3</span></div>
+                  <div class="bar-column"><i style="height:94%"></i><span>W4</span></div>
+                  <div class="bar-column"><i style="height:82%"></i><span>W5</span></div>
+                  <div class="bar-column"><i style="height:91%"></i><span>W6</span></div>
+                </div>
+              </article>
+
+              <div style="height:16px"></div>
+              <article class="connection-card">
+                <iconify-icon icon="lucide:refresh-cw" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong>Attendance + leave automatically linked</strong>
+                  <small>Approved leave and verified time records are included in the payroll summary without re-encoding.</small>
+                </div>
+              </article>
+
+              <div style="height:16px"></div>
+              <button class="big-btn dark" id="sendPayroll" type="button">
+                Download My Summary
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen screen-page" data-screen="alerts">
+          <div class="scroll">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span class="status-icons">
+                <span class="signal"><i></i><i></i><i></i></span>
+                <span class="wifi"></span>
+                <span class="battery"></span>
+              </span>
+            </div>
+
+            <header class="page-header">
+              <button class="back-btn" type="button" data-go="home" aria-label="Back to home">
+                <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+              </button>
+              <h2 id="alertsTitle">Inbox</h2>
+              <button class="back-btn" id="markRead" type="button" aria-label="Mark all as read">
+                <iconify-icon icon="lucide:check-check" aria-hidden="true"></iconify-icon>
+              </button>
+            </header>
+
+            <div class="page-body">
+              <div class="row" style="margin-bottom:14px;">
+                <div>
+                  <span class="tiny muted">Smart Notifications</span>
+                  <h2 style="margin:4px 0 0;font-size:24px;">Today</h2>
+                </div>
+                <span class="chip" id="unreadCount">3 unread</span>
+              </div>
+
+              <div class="notice-list">
+                <article class="notice unread" data-employee-only>
+                  <div class="notice-icon"><iconify-icon icon="lucide:alarm-clock" aria-hidden="true"></iconify-icon></div>
+                  <div>
+                    <h3>Shift starts in 15 minutes</h3>
+                    <p>Be ready to verify your identity and location before 8:00 AM.</p>
+                    <time>7:45 AM · Employee reminder</time>
+                  </div>
+                </article>
+
+                <article class="notice unread" data-management-only>
+                  <div class="notice-icon danger"><iconify-icon icon="lucide:map-pin-off" aria-hidden="true"></iconify-icon></div>
+                  <div>
+                    <h3>Employee left assigned area</h3>
+                    <p>Mark Reyes moved outside the BGC Field Team geofence. The supervisor was notified automatically.</p>
+                    <time>8:54 AM · Location alert</time>
+                  </div>
+                </article>
+
+                <article class="notice unread" id="wrongLocationNotice" data-management-only data-event-alert hidden>
+                  <div class="notice-icon danger"><iconify-icon icon="lucide:shield-alert" aria-hidden="true"></iconify-icon></div>
+                  <div>
+                    <h3>Wrong-location check-in blocked</h3>
+                    <p>A biometric check-in was attempted outside the employee’s assigned work area. No attendance record was created.</p>
+                    <time>8:07 AM · Supervisor notified automatically</time>
+                  </div>
+                </article>
+
+                <article class="notice unread" data-management-only>
+                  <div class="notice-icon warn"><iconify-icon icon="lucide:circle-alert" aria-hidden="true"></iconify-icon></div>
+                  <div>
+                    <h3>Missed check-in flagged</h3>
+                    <p>John Cruz has not checked in 30 minutes after shift start.</p>
+                    <time>8:30 AM · Supervisor alert</time>
+                  </div>
+                </article>
+
+                <article class="notice" data-employee-only>
+                  <div class="notice-icon"><iconify-icon icon="lucide:log-out" aria-hidden="true"></iconify-icon></div>
+                  <div>
+                    <h3>Shift-end reminder scheduled</h3>
+                    <p>You will be reminded at 4:55 PM to complete check-out.</p>
+                    <time>Automatic reminder</time>
+                  </div>
+                </article>
+              </div>
+
+              <h2 class="section-title" id="managementInboxTitle" data-management-only>Management Inbox</h2>
+
+              <article class="card approval-card" id="approvalCard" data-management-only>
+                <div class="card-head">
+                  <div>
+                    <span class="tiny muted">Leave Request</span>
+                    <h3 style="margin-top:4px;">Maria Santos</h3>
+                  </div>
+                  <span class="chip warn" id="approvalStatus">Pending</span>
+                </div>
+                <div class="approval-meta">
+                  <div><span>Leave type</span><strong>Vacation</strong></div>
+                  <div><span>Dates</span><strong>Jul 10–11</strong></div>
+                </div>
+                <p class="muted" style="font-size:13px;font-weight:700;line-height:1.4;margin:0 0 14px;">
+                  Family appointment · 8 vacation days remaining
+                </p>
+                <div class="action-row" id="approvalActions">
+                  <button class="small-btn danger" id="declineLeave" type="button">Decline</button>
+                  <button class="small-btn primary" id="approveLeave" type="button">Approve</button>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
         <nav class="nav" id="bottomNav" aria-label="Prototype bottom navigation">
           <button class="active" type="button" data-go="home">
-            <span class="icon">⌂</span>
+            <span class="icon"><iconify-icon icon="lucide:house" aria-hidden="true"></iconify-icon></span>
             <span>Home</span>
           </button>
           <button type="button" data-go="attendance">
-            <span class="icon">◷</span>
+            <span class="icon"><iconify-icon icon="lucide:clock-3" aria-hidden="true"></iconify-icon></span>
             <span>Logs</span>
           </button>
           <button type="button" data-go="map">
-            <span class="icon">⌖</span>
+            <span class="icon"><iconify-icon icon="lucide:map-pin" aria-hidden="true"></iconify-icon></span>
             <span>Map</span>
           </button>
           <button type="button" data-go="leave">
-            <span class="icon">✚</span>
+            <span class="icon"><iconify-icon icon="lucide:calendar-plus" aria-hidden="true"></iconify-icon></span>
             <span>Leave</span>
           </button>
           <button type="button" data-go="profile">
-            <span class="icon">◎</span>
+            <span class="icon"><iconify-icon icon="lucide:user-round" aria-hidden="true"></iconify-icon></span>
             <span>Profile</span>
           </button>
         </nav>
 
-        <div class="toast" id="toast">Prototype action completed.</div>
+        <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">Prototype action completed.</div>
       </div>
     </section>
 
@@ -1623,16 +3080,35 @@
       <div class="eyebrow">Mobile UX Prototype</div>
       <h1>FieldHR Attendance System</h1>
       <p>
-        A clean mobile-first prototype for biometric check-in, GPS location alerts,
-        leave filing, attendance records, and employee 201 files. The style uses the
-        uploaded reference only as inspiration, with a new HR-focused visual identity.
+        A complete mobile-first HR attendance prototype with biometric verification,
+        live field monitoring, automated alerts, offline sync, leave approvals,
+        payroll-ready reports, and protected employee records.
       </p>
 
+      <section class="desktop-role-picker" aria-label="Choose a prototype role">
+        <h2>Choose a demo role</h2>
+        <p>Select a role to update the mobile prototype and its navigation.</p>
+        <div class="desktop-role-grid">
+          <button type="button" data-role="employee">
+            <iconify-icon icon="lucide:hard-hat" aria-hidden="true"></iconify-icon>
+            Employee
+          </button>
+          <button type="button" data-role="supervisor">
+            <iconify-icon icon="lucide:users-round" aria-hidden="true"></iconify-icon>
+            Supervisor
+          </button>
+          <button type="button" data-role="hr">
+            <iconify-icon icon="lucide:briefcase-business" aria-hidden="true"></iconify-icon>
+            HR
+          </button>
+        </div>
+      </section>
+
       <div class="feature-grid">
-        <div class="feature"><span>⌾</span> Fingerprint / Face check-in simulation</div>
-        <div class="feature"><span>⌖</span> Live team location mockup with geofence alert</div>
-        <div class="feature"><span>◷</span> Automatic attendance records</div>
-        <div class="feature"><span>▣</span> Employee 201 file and payroll-linked profile</div>
+        <div class="feature"><span><iconify-icon icon="lucide:fingerprint" aria-hidden="true"></iconify-icon></span> Secure biometric attendance and offline sync</div>
+        <div class="feature"><span><iconify-icon icon="lucide:map-pinned" aria-hidden="true"></iconify-icon></span> Live team map with automatic geofence alerts</div>
+        <div class="feature"><span><iconify-icon icon="lucide:chart-no-axes-combined" aria-hidden="true"></iconify-icon></span> Payroll-ready reports, reminders, and approvals</div>
+        <div class="feature"><span><iconify-icon icon="lucide:folder-lock" aria-hidden="true"></iconify-icon></span> Protected 201 files linked to attendance</div>
       </div>
     </aside>
   </main>
@@ -1649,8 +3125,64 @@
     const checkInTime = document.getElementById("checkInTime");
     const historyTodayIn = document.getElementById("historyTodayIn");
     const checkButton = document.getElementById("checkButton");
+    const checkinConnection = document.getElementById("checkinConnection");
+    const connectionTitle = document.getElementById("connectionTitle");
+    const connectionCopy = document.getElementById("connectionCopy");
+    const toggleOffline = document.getElementById("toggleOffline");
+    const homeSyncStatus = document.getElementById("homeSyncStatus");
+    const homeSyncTitle = document.getElementById("homeSyncTitle");
+    const homeSyncCopy = document.getElementById("homeSyncCopy");
 
     let checkedIn = false;
+    let offlineMode = false;
+    let currentRole = "employee";
+    let roleChosen = false;
+    let biometricMethod = "fingerprint";
+    let attendanceAction = "checkin";
+    let locationValid = true;
+
+    const roleFlows = {
+      employee: {
+        home: "home",
+        label: "Employee",
+        nav: [
+          ["home", "lucide:house", "Home"],
+          ["attendance", "lucide:clock-3", "Logs"],
+          ["leave", "lucide:calendar-plus", "Leave"],
+          ["alerts", "lucide:bell", "Inbox"],
+          ["profile", "lucide:user-round", "Profile"]
+        ]
+      },
+      supervisor: {
+        home: "supervisor-home",
+        label: "Supervisor",
+        nav: [
+          ["supervisor-home", "lucide:layout-dashboard", "Home"],
+          ["map", "lucide:map-pin", "Team"],
+          ["alerts", "lucide:clipboard-check", "Approvals"],
+          ["reports", "lucide:chart-no-axes-combined", "Reports"],
+          ["people", "lucide:users-round", "People"]
+        ]
+      },
+      hr: {
+        home: "hr-home",
+        label: "HR Administrator",
+        nav: [
+          ["hr-home", "lucide:layout-dashboard", "Home"],
+          ["attendance", "lucide:calendar-check-2", "Time"],
+          ["alerts", "lucide:clipboard-check", "Approvals"],
+          ["reports", "lucide:wallet-cards", "Payroll"],
+          ["people", "lucide:folder-lock", "People"]
+        ]
+      }
+    };
+
+    const peopleRecords = {
+      steve: { initials: "SC", name: "Steve Cabugos", position: "Field Operations Staff", id: "EMP-001", department: "Field Operations", hired: "Jan 08, 2026", emergency: "Maria Cabugos<br />0917 000 0000" },
+      maria: { initials: "MS", name: "Maria Santos", position: "Field Coordinator", id: "EMP-014", department: "Field Operations", hired: "Mar 12, 2024", emergency: "Luis Santos<br />0918 240 1182" },
+      mark: { initials: "MR", name: "Mark Reyes", position: "Field Technician", id: "EMP-019", department: "Field Operations", hired: "Sep 04, 2025", emergency: "Ana Reyes<br />0917 811 4019" },
+      john: { initials: "JC", name: "John Cruz", position: "Logistics Assistant", id: "EMP-028", department: "Logistics", hired: "Feb 16, 2026", emergency: "Liza Cruz<br />0920 156 8820" }
+    };
 
     function showToast(message) {
       toast.textContent = message;
@@ -1658,12 +3190,120 @@
       setTimeout(() => toast.classList.remove("show"), 2300);
     }
 
-    function go(screenName) {
-      screens.forEach(screen => {
-        screen.classList.toggle("active", screen.dataset.screen === screenName);
+    function configureNavigation() {
+      roleFlows[currentRole].nav.forEach((item, index) => {
+        const [screen, icon, label] = item;
+        const button = navButtons[index];
+        button.dataset.go = screen;
+        button.querySelector("iconify-icon").setAttribute("icon", icon);
+        button.lastElementChild.textContent = label;
+      });
+    }
+
+    function populateProfile(key) {
+      const person = peopleRecords[key] || peopleRecords.steve;
+      document.getElementById("profileAvatar").textContent = person.initials;
+      document.getElementById("profileName").textContent = person.name;
+      document.getElementById("profilePosition").textContent = person.position;
+      document.getElementById("profileEmployeeId").textContent = person.id;
+      document.getElementById("profileDepartment").textContent = person.department;
+      document.getElementById("profileHired").textContent = person.hired;
+      document.getElementById("profileEmergency").innerHTML = person.emergency;
+    }
+
+    function defaultPeopleCount() {
+      return currentRole === "hr" ? "124 Employees" : "18 Employees";
+    }
+
+    function resetPeopleSearch() {
+      const search = document.getElementById("peopleSearch");
+      search.value = "";
+      document.querySelectorAll(".person-row").forEach(row => row.hidden = false);
+      document.getElementById("peopleEmpty").hidden = true;
+      document.getElementById("peopleCount").textContent = defaultPeopleCount();
+    }
+
+    function updateRoleContent() {
+      const management = currentRole !== "employee";
+      document.querySelectorAll("[data-management-only]").forEach(item => {
+        item.hidden = item.hasAttribute("data-event-alert")
+          ? !management || item.dataset.triggered !== "true"
+          : !management;
+      });
+      document.querySelectorAll("[data-employee-only]").forEach(item => item.hidden = management);
+      document.querySelectorAll("[data-role]").forEach(item => {
+        item.classList.toggle("active", item.dataset.role === currentRole);
       });
 
-      const mainTabs = ["home", "attendance", "map", "leave", "profile"];
+      const profileBadge = document.getElementById("profileAccessBadge");
+      const profileTitle = document.getElementById("profileAccessTitle");
+      const profileCopy = document.getElementById("profileAccessCopy");
+      profileBadge.innerHTML = management
+        ? '<iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon> Authorized access'
+        : '<iconify-icon icon="lucide:user-round" aria-hidden="true"></iconify-icon> Employee account';
+      profileTitle.textContent = management ? "Authorized 201 file access" : "Protected employee record";
+      profileCopy.textContent = management
+        ? `${roleFlows[currentRole].label} access is logged for privacy and audit review.`
+        : "You can view your own details. Full 201 file access is restricted to authorized HR and management accounts.";
+
+      document.getElementById("profileTitle").textContent = management ? "201 File" : "My Records";
+      document.getElementById("profileBack").dataset.go = management ? "people" : "home";
+      if (!management) populateProfile("steve");
+      document.getElementById("mapTitle").textContent = management ? "Team Map" : "My Work Area";
+      document.getElementById("mapLiveLabel").textContent = management ? "Team locations · Live" : "My location · Live";
+      document.getElementById("reportsTitle").textContent = currentRole === "employee"
+        ? "My Reports"
+        : currentRole === "supervisor" ? "Team Reports" : "Payroll Reports";
+      document.getElementById("alertsTitle").textContent = currentRole === "employee" ? "Inbox" : "Alerts & Approvals";
+      document.getElementById("managementInboxTitle").textContent = currentRole === "hr" ? "HR Approval Inbox" : "Supervisor Inbox";
+      document.getElementById("peopleTitle").textContent = currentRole === "hr" ? "Employee Records" : "Team Members";
+      document.getElementById("peopleScope").textContent = currentRole === "hr" ? "All Departments" : "Field Operations";
+      document.getElementById("peopleCount").textContent = defaultPeopleCount();
+
+      const reportScopeBadge = document.getElementById("reportScopeBadge");
+      reportScopeBadge.innerHTML = currentRole === "employee"
+        ? '<iconify-icon icon="lucide:link" aria-hidden="true"></iconify-icon> Payroll linked'
+        : currentRole === "supervisor"
+          ? '<iconify-icon icon="lucide:users-round" aria-hidden="true"></iconify-icon> Team summary'
+          : '<iconify-icon icon="lucide:badge-check" aria-hidden="true"></iconify-icon> Payroll ready';
+      document.getElementById("sendPayroll").textContent = currentRole === "employee"
+        ? "Download My Summary"
+        : currentRole === "supervisor" ? "Submit Team Summary" : "Send Summary to Payroll";
+
+      const visibleUnread = [...document.querySelectorAll(".notice.unread")].filter(item => !item.hidden).length;
+      document.getElementById("unreadCount").textContent = `${visibleUnread} unread`;
+      document.querySelectorAll("[data-dot-role]").forEach(dot => {
+        const roleNotices = [...(dot.dataset.dotRole === "employee"
+          ? document.querySelectorAll(".notice.unread[data-employee-only]")
+          : document.querySelectorAll(".notice.unread[data-management-only]"))]
+          .filter(notice => !notice.hidden);
+        dot.hidden = roleNotices.length === 0;
+      });
+      resetPeopleSearch();
+    }
+
+    function selectRole(role) {
+      if (!roleFlows[role]) return;
+      currentRole = role;
+      roleChosen = true;
+      configureNavigation();
+      updateRoleContent();
+      setReportPeriod("monthly");
+      go(roleFlows[role].home);
+      showToast(`Logged in as ${roleFlows[role].label}.`);
+    }
+
+    function go(screenName) {
+      if (screenName === "home") screenName = roleFlows[currentRole].home;
+
+      screens.forEach(screen => {
+        const active = screen.dataset.screen === screenName;
+        screen.classList.toggle("active", active);
+        screen.inert = !active;
+        screen.setAttribute("aria-hidden", String(!active));
+      });
+
+      const mainTabs = roleFlows[currentRole].nav.map(item => item[0]);
       nav.style.display = mainTabs.includes(screenName) ? "grid" : "none";
 
       navButtons.forEach(btn => {
@@ -1672,46 +3312,276 @@
     }
 
     document.addEventListener("click", (event) => {
+      const roleTrigger = event.target.closest("[data-role]");
+      if (roleTrigger) {
+        selectRole(roleTrigger.dataset.role);
+        return;
+      }
+
+      const personTrigger = event.target.closest("[data-person]");
+      if (personTrigger) populateProfile(personTrigger.dataset.person);
+
       const trigger = event.target.closest("[data-go]");
       if (trigger) {
         go(trigger.dataset.go);
       }
     });
 
-    setTimeout(() => go("home"), 1450);
+    configureNavigation();
+    updateRoleContent();
+    go("splash");
+
+    function syncDeviceTime() {
+      const now = new Date();
+      const displayTime = now.toLocaleTimeString(undefined, {
+        hour: "numeric",
+        minute: "2-digit"
+      });
+      const accessibleTime = now.toLocaleTimeString(undefined, {
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit"
+      });
+
+      document.querySelectorAll(".statusbar > span:first-child").forEach(element => {
+        element.textContent = displayTime;
+        element.setAttribute("aria-label", `Current device time: ${accessibleTime}`);
+        element.title = now.toLocaleString();
+      });
+    }
+
+    syncDeviceTime();
+    setInterval(syncDeviceTime, 15000);
+    setTimeout(() => {
+      if (!roleChosen) go("login");
+    }, 1450);
+
+    function updateBiometricUI() {
+      const faceMode = biometricMethod === "face";
+      const checkingOut = attendanceAction === "checkout";
+      document.getElementById("biometricIcon").setAttribute("icon", faceMode ? "lucide:scan-face" : "lucide:fingerprint");
+      document.getElementById("biometricTitle").textContent = faceMode ? "Position Your Face" : "Touch Sensor";
+      document.getElementById("biometricCopy").textContent = faceMode
+        ? `Center your face in the frame to confirm your ${checkingOut ? "check-out" : "check-in"}.`
+        : `Use your registered fingerprint to confirm your ${checkingOut ? "check-out" : "check-in"}.`;
+      document.getElementById("checkinPageTitle").textContent = checkingOut ? "Secure Check-Out" : "Secure Check-In";
+      document.getElementById("simulateVerify").textContent = faceMode
+        ? `Verify Face & ${checkingOut ? "Check Out" : "Check In"}`
+        : `Verify Fingerprint & ${checkingOut ? "Check Out" : "Check In"}`;
+      document.getElementById("locationCheckCard").hidden = checkingOut;
+      document.getElementById("toggleWrongLocation").hidden = checkingOut;
+    }
+
+    function updateLocationUI() {
+      const card = document.getElementById("locationCheckCard");
+      card.classList.toggle("invalid", !locationValid);
+      card.querySelector("iconify-icon").setAttribute("icon", locationValid ? "lucide:map-pinned" : "lucide:map-pin-off");
+      document.getElementById("locationCheckTitle").textContent = locationValid ? "Inside assigned work area" : "Outside assigned work area";
+      document.getElementById("locationCheckCopy").textContent = locationValid
+        ? "BGC Field Team · GPS accuracy 8 meters"
+        : "Check-in will be blocked and the supervisor will be notified.";
+      document.getElementById("toggleWrongLocation").textContent = locationValid ? "Simulate Wrong Location" : "Restore Assigned Location";
+    }
+
+    document.querySelectorAll("[data-biometric]").forEach(button => {
+      button.addEventListener("click", () => {
+        biometricMethod = button.dataset.biometric;
+        document.querySelectorAll("[data-biometric]").forEach(item => item.classList.toggle("active", item === button));
+        updateBiometricUI();
+      });
+    });
+
+    document.getElementById("toggleWrongLocation").addEventListener("click", () => {
+      locationValid = !locationValid;
+      updateLocationUI();
+    });
+
+    toggleOffline.addEventListener("click", () => {
+      offlineMode = !offlineMode;
+      checkinConnection.classList.toggle("offline", offlineMode);
+      checkinConnection.querySelector("iconify-icon").setAttribute("icon", offlineMode ? "lucide:wifi-off" : "lucide:wifi");
+      connectionTitle.textContent = offlineMode ? "Poor signal detected" : "Online and ready";
+      connectionCopy.textContent = offlineMode
+        ? "Your verified check-in will be saved securely on this device."
+        : "Your attendance will be uploaded immediately.";
+      toggleOffline.textContent = offlineMode ? "Restore Connection" : "Simulate Poor Signal";
+      showToast(offlineMode ? "Offline mode enabled for this simulation." : "Connection restored.");
+    });
 
     checkButton.addEventListener("click", () => {
-      if (checkedIn) {
-        document.getElementById("checkOutTime").textContent = "5:03 PM";
-        statusTitle.innerHTML = "Shift<br />Completed";
-        statusSub.textContent = "Attendance submitted for payroll review";
-        checkButton.textContent = "Check In Tomorrow";
-        checkButton.classList.add("secondary");
-        showToast("Check-out saved successfully.");
-        checkedIn = false;
-        return;
-      }
-
+      attendanceAction = checkedIn ? "checkout" : "checkin";
+      locationValid = true;
+      updateLocationUI();
+      updateBiometricUI();
       go("checkin");
     });
 
     document.getElementById("simulateVerify").addEventListener("click", () => {
+      const methodLabel = biometricMethod === "face" ? "Face" : "Fingerprint";
+
+      if (attendanceAction === "checkin" && !locationValid) {
+        document.getElementById("biometricTitle").textContent = "Check-In Blocked";
+        document.getElementById("biometricCopy").textContent = "Your identity was verified, but this location is outside your assigned work area.";
+        const wrongLocationNotice = document.getElementById("wrongLocationNotice");
+        wrongLocationNotice.dataset.triggered = "true";
+        showToast("Wrong-location check-in blocked. Supervisor notified.");
+        return;
+      }
+
+      if (attendanceAction === "checkout") {
+        checkedIn = false;
+        document.getElementById("checkOutTime").textContent = "5:03 PM";
+        document.getElementById("historyTodayOut").textContent = "5:03 PM";
+        document.getElementById("historyTodayTotal").textContent = "9h 01m · Automatically recorded";
+        const todayStatus = document.getElementById("historyTodayStatus");
+        todayStatus.textContent = "Completed";
+        todayStatus.className = "chip";
+        statusTitle.innerHTML = "Shift<br />Completed";
+        statusSub.textContent = "Attendance submitted for payroll review";
+        verifyChip.textContent = `${methodLabel} Verified`;
+        checkButton.textContent = "Next Shift · Jul 3, 8:00 AM";
+        checkButton.classList.add("secondary");
+        checkButton.disabled = true;
+        go("home");
+        showToast(`${methodLabel} verified. Check-out saved.`);
+        return;
+      }
+
       checkedIn = true;
       statusTitle.innerHTML = "Checked In<br />8:02 AM";
       statusSub.textContent = "Inside assigned area · GPS verified";
-      verifyChip.textContent = "Verified";
+      verifyChip.textContent = `${methodLabel} Verified`;
       verifyChip.classList.remove("warn");
       checkInTime.textContent = "8:02 AM";
       historyTodayIn.textContent = "8:02 AM";
       checkButton.textContent = "Check Out";
       checkButton.classList.remove("secondary");
+      checkButton.disabled = false;
       go("home");
-      showToast("Biometric verified. Check-in saved.");
+
+      if (offlineMode) {
+        homeSyncStatus.hidden = false;
+        homeSyncStatus.classList.add("offline");
+        homeSyncStatus.querySelector("iconify-icon").setAttribute("icon", "lucide:cloud-off");
+        homeSyncTitle.textContent = "Saved securely offline";
+        homeSyncCopy.textContent = "Attendance is queued and will upload automatically when signal returns.";
+        showToast(`${methodLabel} verified. Check-in saved offline.`);
+
+        setTimeout(() => {
+          offlineMode = false;
+          homeSyncStatus.classList.remove("offline");
+          homeSyncStatus.querySelector("iconify-icon").setAttribute("icon", "lucide:cloud-check");
+          homeSyncTitle.textContent = "Attendance synced";
+          homeSyncCopy.textContent = "Connection restored · Check-in uploaded automatically to payroll records.";
+          showToast("Connection restored. Attendance synced.");
+        }, 3600);
+      } else {
+        showToast(`${methodLabel} verified. Check-in saved.`);
+      }
     });
 
     document.getElementById("submitLeave").addEventListener("click", () => {
       showToast("Leave request submitted to supervisor.");
     });
+
+    document.getElementById("simulateGeofence").addEventListener("click", () => {
+      showToast("Geofence alert sent to the supervisor.");
+    });
+
+    const liveUpdates = [...document.querySelectorAll(".live-update")];
+    let liveTick = 0;
+    setInterval(() => {
+      liveTick = (liveTick + 1) % 4;
+      liveUpdates.forEach((label, index) => {
+        const seconds = liveTick * 3 + index * 2;
+        label.textContent = seconds === 0 ? "Last update: just now" : `Last update: ${seconds}s ago`;
+      });
+    }, 3000);
+
+    const reportData = {
+      employee: {
+        daily: { label: "July 2, 2026 · My Summary", hours: "8.0", present: "1", late: "0", absent: "0", chart: "Today by hour" },
+        weekly: { label: "Jun 29 – Jul 5 · My Summary", hours: "40.5", present: "5", late: "1", absent: "0", chart: "My week" },
+        monthly: { label: "July 2026 · My Summary", hours: "176.5", present: "22", late: "1", absent: "1", chart: "My last 6 weeks" }
+      },
+      supervisor: {
+        daily: { label: "July 2, 2026 · Field Team", hours: "142.0", present: "18", late: "2", absent: "1", chart: "Team today" },
+        weekly: { label: "Jun 29 – Jul 5 · Field Team", hours: "710.5", present: "89", late: "6", absent: "3", chart: "Team this week" },
+        monthly: { label: "July 2026 · Field Team", hours: "3160", present: "396", late: "14", absent: "8", chart: "Team last 6 weeks" }
+      },
+      hr: {
+        daily: { label: "July 2, 2026 · Company", hours: "936", present: "117", late: "7", absent: "2", chart: "Company today" },
+        weekly: { label: "Jun 29 – Jul 5 · Company", hours: "4672", present: "584", late: "21", absent: "9", chart: "Company this week" },
+        monthly: { label: "July 2026 · Payroll Cycle", hours: "20584", present: "2573", late: "48", absent: "26", chart: "Company last 6 weeks" }
+      }
+    };
+
+    function setReportPeriod(period) {
+      document.querySelectorAll("[data-period]").forEach(item => item.classList.toggle("active", item.dataset.period === period));
+      const data = reportData[currentRole][period];
+      document.getElementById("reportLabel").textContent = data.label;
+      document.getElementById("reportHours").textContent = data.hours;
+      document.getElementById("reportPresent").textContent = data.present;
+      document.getElementById("reportLate").textContent = data.late;
+      document.getElementById("reportAbsent").textContent = data.absent;
+      document.getElementById("chartTitle").textContent = data.chart;
+    }
+
+    document.querySelectorAll("[data-period]").forEach(button => {
+      button.addEventListener("click", () => {
+        setReportPeriod(button.dataset.period);
+      });
+    });
+
+    document.getElementById("sendPayroll").addEventListener("click", () => {
+      const messages = {
+        employee: "Personal attendance summary downloaded.",
+        supervisor: "Team summary submitted to HR review.",
+        hr: "Verified attendance summary sent to payroll."
+      };
+      showToast(messages[currentRole]);
+    });
+
+    document.getElementById("markRead").addEventListener("click", () => {
+      document.querySelectorAll(".notice.unread").forEach(item => {
+        if (!item.hidden) item.classList.remove("unread");
+      });
+      document.getElementById("unreadCount").textContent = "All read";
+      document.querySelectorAll(`[data-dot-role="${currentRole}"]`).forEach(dot => dot.hidden = true);
+      showToast("All notifications marked as read.");
+    });
+
+    document.getElementById("peopleSearch").addEventListener("input", event => {
+      const query = event.target.value.trim().toLowerCase();
+      const rows = [...document.querySelectorAll(".person-row")];
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const matches = query === "" || row.textContent.toLowerCase().includes(query);
+        row.hidden = !matches;
+        if (matches) visibleCount += 1;
+      });
+
+      document.getElementById("peopleEmpty").hidden = visibleCount !== 0;
+      document.getElementById("peopleCount").textContent = query === ""
+        ? defaultPeopleCount()
+        : `${visibleCount} ${visibleCount === 1 ? "result" : "results"}`;
+    });
+
+    document.getElementById("peopleFilter").addEventListener("click", () => {
+      showToast("Showing active employees across assigned teams.");
+    });
+
+    function resolveLeave(status) {
+      const approvalStatus = document.getElementById("approvalStatus");
+      approvalStatus.textContent = status;
+      approvalStatus.className = status === "Approved" ? "chip" : "chip danger";
+      document.getElementById("approvalActions").hidden = true;
+      showToast(`Leave request ${status.toLowerCase()}. Employee notified.`);
+    }
+
+    document.getElementById("approveLeave").addEventListener("click", () => resolveLeave("Approved"));
+    document.getElementById("declineLeave").addEventListener("click", () => resolveLeave("Declined"));
   </script>
 </body>
 </html>
