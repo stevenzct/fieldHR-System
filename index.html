@@ -1635,6 +1635,140 @@
       padding: 22px 24px 120px;
     }
 
+    .login-body {
+      display: grid;
+      gap: 14px;
+      padding: 22px 24px 120px;
+    }
+
+    .login-panel {
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: white;
+      box-shadow: 0 10px 24px rgba(6,78,59,.06);
+    }
+
+    .login-panel .field {
+      margin: 0;
+    }
+
+    .login-error {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin: -2px 0 0;
+      color: #b91c1c;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .login-error[hidden] {
+      display: none;
+    }
+
+    .text-button {
+      justify-self: end;
+      margin-top: -7px;
+      border: 0;
+      padding: 2px;
+      background: transparent;
+      color: #047857;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .login-divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+
+    .login-divider::before,
+    .login-divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: var(--line);
+    }
+
+    .passkey-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 1px solid rgba(6,78,59,.2);
+      border-radius: 16px;
+      padding: 13px 16px;
+      background: var(--mint-soft);
+      color: var(--deep);
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .passkey-btn iconify-icon {
+      font-size: 20px;
+    }
+
+    .demo-accounts {
+      padding: 16px;
+      border: 1px dashed rgba(6,78,59,.2);
+      border-radius: 20px;
+      background: rgba(255,255,255,.62);
+    }
+
+    .demo-accounts > strong,
+    .demo-accounts > small {
+      display: block;
+    }
+
+    .demo-accounts > strong {
+      font-size: 13px;
+    }
+
+    .demo-accounts > small {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .demo-account-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .demo-account-grid button {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 9px 5px;
+      background: white;
+      color: var(--deep);
+      font-size: 10px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mfa-code input {
+      text-align: center;
+      letter-spacing: 8px;
+      font-size: 24px;
+      font-weight: 950;
+    }
+
     .role-option {
       width: 100%;
       display: grid;
@@ -1967,7 +2101,8 @@
       .content,
       .page-body,
       .dashboard-content,
-      .role-options {
+      .role-options,
+      .login-body {
         padding-left: 18px;
         padding-right: 18px;
       }
@@ -2282,34 +2417,101 @@
                 <span class="mini-logo"><iconify-icon icon="lucide:badge-check" aria-hidden="true"></iconify-icon></span>
                 FieldHR
               </div>
-              <h1>Welcome.<br />Choose your role.</h1>
-              <p>Explore the attendance system from the perspective that matches your work.</p>
+              <h1>Welcome back.</h1>
+              <p>Sign in with your assigned FieldHR account. Your access is determined securely by your account.</p>
             </div>
 
-            <div class="role-options">
-              <button class="role-option" type="button" data-role="employee">
-                <span class="role-option-icon"><iconify-icon icon="lucide:hard-hat" aria-hidden="true"></iconify-icon></span>
-                <span><strong>Employee</strong><small>Check in, file leave, and view personal records</small></span>
-                <iconify-icon icon="lucide:arrow-right" aria-hidden="true"></iconify-icon>
-              </button>
+            <div class="login-body">
+              <form class="login-panel" id="loginForm">
+                <div class="field">
+                  <label for="loginIdentifier">Work email or employee ID</label>
+                  <input id="loginIdentifier" name="identifier" autocomplete="username" placeholder="name@fieldhr.demo" required />
+                </div>
 
-              <button class="role-option" type="button" data-role="supervisor">
-                <span class="role-option-icon"><iconify-icon icon="lucide:users-round" aria-hidden="true"></iconify-icon></span>
-                <span><strong>Supervisor</strong><small>Monitor field teams, alerts, and approvals</small></span>
-                <iconify-icon icon="lucide:arrow-right" aria-hidden="true"></iconify-icon>
-              </button>
+                <div class="field">
+                  <label for="loginPassword">Password</label>
+                  <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required />
+                </div>
 
-              <button class="role-option" type="button" data-role="hr">
-                <span class="role-option-icon"><iconify-icon icon="lucide:briefcase-business" aria-hidden="true"></iconify-icon></span>
-                <span><strong>HR Administrator</strong><small>Manage employees, reports, and payroll records</small></span>
-                <iconify-icon icon="lucide:arrow-right" aria-hidden="true"></iconify-icon>
-              </button>
+                <button class="text-button" id="forgotPassword" type="button">Forgot password?</button>
 
-              <aside class="access-note" style="margin-top:2px;">
+                <p class="login-error" id="loginError" role="alert" hidden>
+                  <iconify-icon icon="lucide:circle-alert" aria-hidden="true"></iconify-icon>
+                  <span>Account or password is incorrect.</span>
+                </p>
+
+                <button class="big-btn" type="submit">Sign In Securely</button>
+                <div class="login-divider">or</div>
+                <button class="passkey-btn" id="passkeyLogin" type="button">
+                  <iconify-icon icon="lucide:fingerprint" aria-hidden="true"></iconify-icon>
+                  Use Device Passkey
+                </button>
+              </form>
+
+              <section class="demo-accounts" aria-label="Prototype demo accounts">
+                <strong>Prototype accounts</strong>
+                <small>Select an account to fill its credentials. The account—not the user—assigns the role. Demo password: FieldHR2026!</small>
+                <div class="demo-account-grid">
+                  <button type="button" data-demo-account="employee">Employee</button>
+                  <button type="button" data-demo-account="supervisor">Supervisor</button>
+                  <button type="button" data-demo-account="hr">HR Admin</button>
+                </div>
+              </section>
+
+              <aside class="access-note">
                 <iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon>
                 <div>
-                  <strong>Prototype access</strong>
-                  <small>No password is required in demo mode. A production system would authenticate the account and assign its role securely.</small>
+                  <strong>Invitation-only access</strong>
+                  <small>Production accounts would be created by HR, authenticated by a managed identity provider, and authorized by the backend.</small>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen role-login" data-screen="mfa">
+          <div class="scroll" style="height:100%;padding-bottom:0;">
+            <div class="statusbar top-safe" style="position:absolute;left:0;right:0;">
+              <span>9:41</span>
+              <span class="status-icons">
+                <span class="signal"><i></i><i></i><i></i></span>
+                <span class="wifi"></span>
+                <span class="battery"></span>
+              </span>
+            </div>
+
+            <div class="role-login-head">
+              <div class="statusbar-spacer" style="height:42px"></div>
+              <div class="role-login-brand">
+                <span class="mini-logo"><iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon></span>
+                Secure verification
+              </div>
+              <h1>Confirm it’s you.</h1>
+              <p id="mfaCopy">Management accounts require an additional verification step.</p>
+            </div>
+
+            <div class="login-body">
+              <form class="login-panel" id="mfaForm">
+                <div class="field mfa-code">
+                  <label for="mfaCode">6-digit verification code</label>
+                  <input id="mfaCode" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000" required />
+                </div>
+                <p class="login-error" id="mfaError" role="alert" hidden>
+                  <iconify-icon icon="lucide:circle-alert" aria-hidden="true"></iconify-icon>
+                  <span>Enter the valid 6-digit demo code.</span>
+                </p>
+                <button class="big-btn" type="submit">Verify & Continue</button>
+                <button class="passkey-btn" id="cancelMfa" type="button">
+                  <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+                  Back to Sign In
+                </button>
+              </form>
+
+              <aside class="access-note">
+                <iconify-icon icon="lucide:key-round" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong>Prototype verification code: 246810</strong>
+                  <small>A production build would use an authenticator or passkey and would never expose a verification code here.</small>
                 </div>
               </aside>
             </div>
@@ -2333,7 +2535,7 @@
                   <iconify-icon icon="lucide:bell" aria-hidden="true"></iconify-icon>
                   <span class="notification-dot" data-dot-role="employee" aria-hidden="true"></span>
                 </button>
-                <button class="outline-pill" type="button" data-go="login">Employee · Switch</button>
+                <button class="outline-pill" type="button" data-logout>Employee · Sign out</button>
               </div>
 
               <div class="hero-title">
@@ -2932,7 +3134,7 @@
                   <iconify-icon icon="lucide:bell" aria-hidden="true"></iconify-icon>
                   <span class="notification-dot" data-dot-role="supervisor" aria-hidden="true"></span>
                 </button>
-                <button class="outline-pill" type="button" data-go="login">Supervisor · Switch</button>
+                <button class="outline-pill" type="button" data-logout>Supervisor · Sign out</button>
               </div>
               <div class="role-dashboard-title">
                 <small>Field Operations</small>
@@ -3001,7 +3203,7 @@
                   <iconify-icon icon="lucide:bell" aria-hidden="true"></iconify-icon>
                   <span class="notification-dot" data-dot-role="hr" aria-hidden="true"></span>
                 </button>
-                <button class="outline-pill" type="button" data-go="login">HR · Switch</button>
+                <button class="outline-pill" type="button" data-logout>HR · Sign out</button>
               </div>
               <div class="role-dashboard-title">
                 <small>People Operations</small>
@@ -3342,21 +3544,21 @@
         payroll-ready reports, and protected employee records.
       </p>
 
-      <section class="desktop-role-picker" aria-label="Choose a prototype role">
-        <h2>Choose a demo role</h2>
-        <p>Select a role to update the mobile prototype and its navigation.</p>
+      <section class="desktop-role-picker" aria-label="Prototype account architecture">
+        <h2>Account-based access</h2>
+        <p>Choose a demo account to fill the sign-in form. Its role and data scope are assigned by the account record.</p>
         <div class="desktop-role-grid">
-          <button type="button" data-role="employee">
+          <button type="button" data-demo-account="employee">
             <iconify-icon icon="lucide:hard-hat" aria-hidden="true"></iconify-icon>
-            Employee
+            Employee account
           </button>
-          <button type="button" data-role="supervisor">
+          <button type="button" data-demo-account="supervisor">
             <iconify-icon icon="lucide:users-round" aria-hidden="true"></iconify-icon>
-            Supervisor
+            Supervisor account
           </button>
-          <button type="button" data-role="hr">
+          <button type="button" data-demo-account="hr">
             <iconify-icon icon="lucide:briefcase-business" aria-hidden="true"></iconify-icon>
-            HR
+            HR account
           </button>
         </div>
       </section>
@@ -3389,6 +3591,14 @@
     const homeSyncStatus = document.getElementById("homeSyncStatus");
     const homeSyncTitle = document.getElementById("homeSyncTitle");
     const homeSyncCopy = document.getElementById("homeSyncCopy");
+    const loginForm = document.getElementById("loginForm");
+    const loginIdentifier = document.getElementById("loginIdentifier");
+    const loginPassword = document.getElementById("loginPassword");
+    const loginError = document.getElementById("loginError");
+    const mfaForm = document.getElementById("mfaForm");
+    const mfaCode = document.getElementById("mfaCode");
+    const mfaError = document.getElementById("mfaError");
+    const mfaCopy = document.getElementById("mfaCopy");
 
     document.querySelectorAll(".wifi").forEach(wifi => {
       const icon = document.createElement("iconify-icon");
@@ -3409,10 +3619,39 @@
     let checkedIn = false;
     let offlineMode = false;
     let currentRole = "employee";
-    let roleChosen = false;
+    let currentAccount = null;
+    let pendingAccount = null;
+    let authenticated = false;
     let biometricMethod = "fingerprint";
     let attendanceAction = "checkin";
     let locationValid = true;
+
+    const demoPassword = "FieldHR2026!";
+    const demoAccounts = {
+      employee: {
+        id: "EMP-001",
+        email: "employee@fieldhr.demo",
+        name: "Steve Cabugos",
+        role: "employee",
+        status: "active"
+      },
+      supervisor: {
+        id: "SUP-001",
+        email: "supervisor@fieldhr.demo",
+        name: "Alex Morgan",
+        role: "supervisor",
+        status: "active"
+      },
+      hr: {
+        id: "HR-001",
+        email: "hr@fieldhr.demo",
+        name: "Dana Lim",
+        role: "hr",
+        status: "active"
+      }
+    };
+
+    const auditEvents = [];
 
     const roleFlows = {
       employee: {
@@ -3504,10 +3743,6 @@
           : !management;
       });
       document.querySelectorAll("[data-employee-only]").forEach(item => item.hidden = management);
-      document.querySelectorAll("[data-role]").forEach(item => {
-        item.classList.toggle("active", item.dataset.role === currentRole);
-      });
-
       const profileBadge = document.getElementById("profileAccessBadge");
       const profileTitle = document.getElementById("profileAccessTitle");
       const profileCopy = document.getElementById("profileAccessCopy");
@@ -3555,18 +3790,76 @@
       resetPeopleSearch();
     }
 
-    function selectRole(role) {
-      if (!roleFlows[role]) return;
-      currentRole = role;
-      roleChosen = true;
+    function recordAudit(action, account = currentAccount) {
+      auditEvents.push({
+        action,
+        accountId: account?.id || null,
+        occurredAt: new Date().toISOString()
+      });
+    }
+
+    function findDemoAccount(identifier) {
+      const normalized = identifier.trim().toLowerCase();
+      return Object.values(demoAccounts).find(account =>
+        account.email.toLowerCase() === normalized || account.id.toLowerCase() === normalized
+      );
+    }
+
+    function completeLogin(account, method) {
+      currentAccount = account;
+      pendingAccount = null;
+      currentRole = account.role;
+      authenticated = true;
       configureNavigation();
       updateRoleContent();
       setReportPeriod("monthly");
-      go(roleFlows[role].home);
-      showToast(`Logged in as ${roleFlows[role].label}.`);
+      recordAudit(`login:${method}`, account);
+      go(roleFlows[currentRole].home);
+      showToast(`Signed in as ${account.name} · ${roleFlows[currentRole].label}.`);
+    }
+
+    function beginAuthentication(account, method) {
+      loginError.hidden = true;
+
+      if (!account || account.status !== "active") {
+        loginError.querySelector("span").textContent = "This account could not be found or is not active.";
+        loginError.hidden = false;
+        return;
+      }
+
+      const privilegedAccount = account.role === "supervisor" || account.role === "hr";
+      if (privilegedAccount && method === "password") {
+        pendingAccount = account;
+        mfaCode.value = "";
+        mfaError.hidden = true;
+        mfaCopy.textContent = `${account.name}'s ${roleFlows[account.role].label} account requires an additional verification step.`;
+        recordAudit("mfa:challenge", account);
+        go("mfa");
+        setTimeout(() => mfaCode.focus(), 120);
+        return;
+      }
+
+      completeLogin(account, method);
+    }
+
+    function logout() {
+      if (currentAccount) recordAudit("logout");
+      currentAccount = null;
+      pendingAccount = null;
+      authenticated = false;
+      currentRole = "employee";
+      loginPassword.value = "";
+      loginError.hidden = true;
+      mfaError.hidden = true;
+      go("login");
+      setTimeout(() => loginIdentifier.focus(), 120);
+      showToast("Signed out securely.");
     }
 
     function go(screenName) {
+      const publicScreens = ["splash", "login", "mfa"];
+      if (!authenticated && !publicScreens.includes(screenName)) screenName = "login";
+      if (screenName === "mfa" && !pendingAccount) screenName = "login";
       if (screenName === "home") screenName = roleFlows[currentRole].home;
 
       screens.forEach(screen => {
@@ -3585,9 +3878,27 @@
     }
 
     document.addEventListener("click", (event) => {
-      const roleTrigger = event.target.closest("[data-role]");
-      if (roleTrigger) {
-        selectRole(roleTrigger.dataset.role);
+      const logoutTrigger = event.target.closest("[data-logout]");
+      if (logoutTrigger) {
+        logout();
+        return;
+      }
+
+      const demoTrigger = event.target.closest("[data-demo-account]");
+      if (demoTrigger) {
+        const account = demoAccounts[demoTrigger.dataset.demoAccount];
+        if (!account) return;
+        if (authenticated) {
+          logout();
+        } else {
+          pendingAccount = null;
+          go("login");
+        }
+        loginIdentifier.value = account.email;
+        loginPassword.value = demoPassword;
+        loginError.hidden = true;
+        setTimeout(() => loginPassword.focus(), 120);
+        showToast(`${roleFlows[account.role].label} demo credentials filled.`);
         return;
       }
 
@@ -3603,6 +3914,58 @@
     configureNavigation();
     updateRoleContent();
     go("splash");
+
+    loginForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const account = findDemoAccount(loginIdentifier.value);
+      if (!account || loginPassword.value !== demoPassword) {
+        loginError.querySelector("span").textContent = "Account or password is incorrect.";
+        loginError.hidden = false;
+        recordAudit("login:failed", account);
+        return;
+      }
+      beginAuthentication(account, "password");
+    });
+
+    document.getElementById("passkeyLogin").addEventListener("click", () => {
+      const account = findDemoAccount(loginIdentifier.value);
+      if (!account) {
+        loginError.querySelector("span").textContent = "Enter a valid demo account before using its device passkey.";
+        loginError.hidden = false;
+        return;
+      }
+      showToast("Device passkey verified for this simulation.");
+      beginAuthentication(account, "passkey");
+    });
+
+    document.getElementById("forgotPassword").addEventListener("click", () => {
+      const account = findDemoAccount(loginIdentifier.value);
+      if (!account) {
+        loginError.querySelector("span").textContent = "Enter your work email or employee ID first.";
+        loginError.hidden = false;
+        return;
+      }
+      loginError.hidden = true;
+      recordAudit("password:recovery-requested", account);
+      showToast(`Recovery instructions sent to ${account.email}.`);
+    });
+
+    mfaForm.addEventListener("submit", event => {
+      event.preventDefault();
+      if (!pendingAccount || mfaCode.value !== "246810") {
+        mfaError.hidden = false;
+        recordAudit("mfa:failed", pendingAccount);
+        return;
+      }
+      mfaError.hidden = true;
+      completeLogin(pendingAccount, "password+mfa");
+    });
+
+    document.getElementById("cancelMfa").addEventListener("click", () => {
+      pendingAccount = null;
+      mfaError.hidden = true;
+      go("login");
+    });
 
     function syncDeviceTime() {
       const now = new Date();
@@ -3626,7 +3989,7 @@
     syncDeviceTime();
     setInterval(syncDeviceTime, 15000);
     setTimeout(() => {
-      if (!roleChosen) go("login");
+      if (!authenticated) go("login");
     }, 1450);
 
     function updateBiometricUI() {
