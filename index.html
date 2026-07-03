@@ -365,12 +365,31 @@
 
     .home-hero {
       color: white;
-      min-height: 318px;
-      padding: 0 24px 46px;
+      min-height: 352px;
+      padding: 0 24px 62px;
       background:
-        radial-gradient(circle at 80% 12%, rgba(22,199,132,.28), transparent 32%),
-        linear-gradient(150deg, var(--deep-2), #07563e 62%, var(--deep));
+        radial-gradient(circle at 88% 10%, rgba(34,211,148,.34), transparent 32%),
+        radial-gradient(circle at 6% 92%, rgba(22,199,132,.18), transparent 30%),
+        linear-gradient(145deg, #043c31, #075c46 58%, #064e3b);
       position: relative;
+      overflow: hidden;
+    }
+
+    .home-hero::after {
+      content: "";
+      position: absolute;
+      right: -62px;
+      bottom: -86px;
+      width: 330px;
+      height: 230px;
+      border: 1px solid rgba(124,240,189,.15);
+      border-radius: 48% 52% 0 0;
+      transform: rotate(-18deg);
+      box-shadow:
+        0 -22px 0 -21px rgba(124,240,189,.12),
+        0 -46px 0 -45px rgba(124,240,189,.1),
+        0 -70px 0 -69px rgba(124,240,189,.08);
+      pointer-events: none;
     }
 
     .top-actions {
@@ -378,14 +397,16 @@
       align-items: center;
       justify-content: space-between;
       padding-top: 18px;
+      position: relative;
+      z-index: 2;
     }
 
     .bell,
     .circle-btn {
-      width: 40px;
-      height: 40px;
-      border: 0;
-      background: rgba(255,255,255,.08);
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.1);
       color: white;
       border-radius: 16px;
       display: grid;
@@ -402,60 +423,96 @@
     }
 
     .outline-pill {
-      border: 2px solid var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid rgba(255,255,255,.22);
       color: white;
-      background: rgba(22,199,132,.08);
+      background: rgba(255,255,255,.1);
       border-radius: 999px;
-      padding: 10px 16px;
+      padding: 10px 14px;
       font-weight: 850;
-      font-size: 14px;
+      font-size: 13px;
+      backdrop-filter: blur(14px);
+      cursor: pointer;
     }
 
     .hero-title {
-      margin-top: 44px;
+      margin-top: 46px;
+      position: relative;
+      z-index: 2;
     }
 
     .hero-title small {
-      display: block;
-      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 15px;
       font-weight: 850;
-      opacity: .86;
-      margin-bottom: 8px;
+      color: #a7f3d0;
+      margin-bottom: 11px;
     }
 
     .hero-title h1 {
       margin: 0;
-      font-size: 48px;
-      letter-spacing: -2.1px;
-      line-height: .98;
+      font-size: 46px;
+      letter-spacing: -2px;
+      line-height: .96;
+    }
+
+    .hero-title h1 span,
+    .hero-title h1 strong {
+      display: block;
+    }
+
+    .hero-title h1 strong {
+      margin-top: 6px;
+      color: #9ff2c9;
+      font-weight: 950;
     }
 
     .hero-title .status-line {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 16px;
-      color: #7cf0bd;
-      font-size: 17px;
-      font-weight: 850;
+      gap: 9px;
+      width: fit-content;
+      max-width: 100%;
+      margin-top: 19px;
+      padding: 9px 12px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      background: rgba(255,255,255,.1);
+      color: white;
+      font-size: 13px;
+      font-weight: 800;
       line-height: 1.35;
       position: relative;
       z-index: 3;
     }
 
-    .status-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 999px;
-      background: currentColor;
-      box-shadow: 0 0 0 4px rgba(124,240,189,.12);
+    .status-line > iconify-icon {
+      color: #a7f3d0;
+      font-size: 18px;
+      flex: 0 0 auto;
+    }
+
+    .status-confirm {
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      margin-left: auto;
+      border-radius: 50%;
+      background: #22c77a;
+      color: white;
+      font-size: 14px;
       flex: 0 0 auto;
     }
 
     .content {
       padding: 0 24px;
       padding-bottom: 120px;
-      margin-top: -34px;
+      margin-top: -50px;
       position: relative;
       z-index: 2;
     }
@@ -473,9 +530,12 @@
     }
 
     .attendance-card {
-      min-height: 146px;
+      min-height: 244px;
       display: grid;
-      gap: 14px;
+      gap: 17px;
+      padding: 22px;
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 24px 48px rgba(6,78,59,.16);
     }
 
     .card-head {
@@ -511,12 +571,47 @@
 
     .mini-metric {
       display: grid;
-      gap: 4px;
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .attendance-times {
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .attendance-times .mini-metric + .mini-metric {
+      padding-left: 22px;
+      margin-left: 22px;
+      border-left: 1px solid #ccefe0;
     }
 
     .mini-metric strong {
-      font-size: 26px;
-      letter-spacing: -.8px;
+      font-size: 29px;
+      letter-spacing: -1px;
+      color: var(--deep);
+    }
+
+    .time-state {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: #f8fbfa;
+      font-size: 10px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .time-state.active {
+      border-color: #c8f0dd;
+      color: #047857;
+      background: var(--mint-soft);
     }
 
     .chip {
@@ -555,6 +650,12 @@
       transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
     }
 
+    .big-btn iconify-icon {
+      margin-right: 7px;
+      vertical-align: -3px;
+      font-size: 21px;
+    }
+
     .big-btn:hover {
       transform: translateY(-2px);
       filter: saturate(1.08);
@@ -587,43 +688,119 @@
     }
 
     .promo-card {
-      margin-top: 22px;
-      background: var(--mint);
-      border-radius: var(--radius-xl);
-      padding: 20px;
+      width: 100%;
+      margin-top: 14px;
+      border: 1px solid #cfebdf;
+      background: linear-gradient(135deg, #effbf5, #e5f7ef);
+      border-radius: 22px;
+      padding: 15px;
       position: relative;
       overflow: hidden;
-      min-height: 132px;
+      min-height: 92px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
     }
 
     .promo-card h3 {
-      margin: 0 0 14px;
-      font-size: 22px;
-      letter-spacing: -.8px;
-      line-height: 1.18;
+      margin: 0 0 5px;
+      font-size: 15px;
+      letter-spacing: -.2px;
+      line-height: 1.2;
     }
 
     .promo-card strong {
-      font-size: 15px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
       display: inline-flex;
       align-items: center;
       gap: 5px;
     }
 
     .promo-icon {
-      width: 72px;
-      height: 72px;
-      border-radius: 24px;
+      width: 50px;
+      height: 50px;
+      border-radius: 17px;
       background: var(--deep);
-      color: var(--primary);
+      color: #a7f3d0;
       display: grid;
       place-items: center;
       font-size: 34px;
       font-weight: 1000;
+      flex: 0 0 auto;
+    }
+
+    .promo-card > div:nth-child(2) {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .promo-arrow {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(6,78,59,.08);
+      color: var(--deep);
+      font-size: 20px;
+      flex: 0 0 auto;
+    }
+
+    .home-more-title {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+
+    .home-more-tools .tool-card {
+      min-height: 86px;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      grid-template-rows: auto auto;
+      column-gap: 10px;
+      align-items: center;
+      padding: 13px;
+    }
+
+    .home-more-tools .tool-icon {
+      grid-row: 1 / 3;
+      width: 40px;
+      height: 40px;
+      margin: 0;
+    }
+
+    .home-more-tools .tool-card strong,
+    .home-more-tools .tool-card small {
+      margin: 0;
+    }
+
+    .screen[data-screen="home"] {
+      background: linear-gradient(180deg, #eaf8f2 0, #f8fbfa 70%);
+    }
+
+    #homeSyncStatus {
+      min-height: 78px;
+      align-items: center;
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 21px;
+      box-shadow: 0 10px 24px rgba(180,83,9,.05);
+    }
+
+    #homeSyncStatus > iconify-icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      margin: 0;
+      border-radius: 14px;
+      background: #ffedd5;
+      font-size: 23px;
       flex: 0 0 auto;
     }
 
@@ -1004,6 +1181,36 @@
       resize: none;
     }
 
+    .password-input-wrap {
+      position: relative;
+    }
+
+    .password-input-wrap input {
+      padding-right: 48px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      top: 50%;
+      right: 7px;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 19px;
+      cursor: pointer;
+      transform: translateY(-50%);
+    }
+
+    .password-toggle:hover {
+      background: var(--mint-soft);
+      color: var(--deep);
+    }
+
     .avatar-row {
       display: flex;
       gap: 14px;
@@ -1094,17 +1301,19 @@
 
     .nav {
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: calc(86px + env(safe-area-inset-bottom));
-      background: rgba(255,255,255,.95);
-      border-top: 1px solid var(--line);
+      left: 10px;
+      right: 10px;
+      bottom: 8px;
+      height: calc(78px + env(safe-area-inset-bottom));
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 25px;
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      padding: 8px 8px calc(16px + env(safe-area-inset-bottom));
+      padding: 7px 7px calc(10px + env(safe-area-inset-bottom));
       z-index: 20;
-      backdrop-filter: blur(18px);
+      backdrop-filter: blur(22px);
+      box-shadow: 0 14px 34px rgba(6,78,59,.16);
     }
 
     .nav button {
@@ -1127,7 +1336,8 @@
 
     .nav button.active {
       color: var(--deep);
-      background: var(--mint-soft);
+      background: rgba(236,253,245,.92);
+      box-shadow: inset 0 0 0 1px rgba(22,199,132,.12);
     }
 
     .nav .icon {
@@ -1581,7 +1791,7 @@
 
     .role-login-head h1 {
       margin: 0;
-      font-size: 34px;
+      font-size: 25px;
       line-height: 1.03;
       letter-spacing: -1.3px;
     }
@@ -1767,6 +1977,104 @@
       letter-spacing: 8px;
       font-size: 24px;
       font-weight: 950;
+    }
+
+    .passkey-confirmation {
+      display: grid;
+      justify-items: center;
+      gap: 16px;
+      padding: 26px 20px;
+      text-align: center;
+    }
+
+    .passkey-confirmation h2 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -.8px;
+    }
+
+    .passkey-confirmation p {
+      max-width: 250px;
+      margin: -8px 0 2px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .passkey-scan {
+      width: 126px;
+      height: 126px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(22,199,132,.34);
+      border-radius: 42px;
+      background:
+        radial-gradient(circle, rgba(22,199,132,.2), transparent 64%),
+        var(--mint-soft);
+      color: #047857;
+      font-size: 62px;
+      cursor: pointer;
+      box-shadow: 0 18px 42px rgba(6,78,59,.14), inset 0 0 0 10px rgba(255,255,255,.58);
+      transition: transform .2s ease, box-shadow .2s ease;
+      animation: passkeyPulse 2s ease-in-out infinite;
+    }
+
+    .passkey-scan:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 24px 48px rgba(6,78,59,.19), inset 0 0 0 10px rgba(255,255,255,.7);
+    }
+
+    .passkey-scan:active {
+      transform: scale(.97);
+    }
+
+    @keyframes passkeyPulse {
+      0%, 100% { box-shadow: 0 18px 42px rgba(6,78,59,.14), 0 0 0 0 rgba(22,199,132,.18), inset 0 0 0 10px rgba(255,255,255,.58); }
+      50% { box-shadow: 0 18px 42px rgba(6,78,59,.14), 0 0 0 14px rgba(22,199,132,0), inset 0 0 0 10px rgba(255,255,255,.58); }
+    }
+
+    .passkey-account {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: #f0f7f4;
+      color: var(--deep);
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .setup-success-icon {
+      width: 104px;
+      height: 104px;
+      border-radius: 34px;
+      animation: none;
+      font-size: 48px;
+    }
+
+    .setup-checklist {
+      display: grid;
+      gap: 9px;
+      padding: 15px 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: white;
+    }
+
+    .setup-checklist div {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--deep);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .setup-checklist iconify-icon {
+      color: var(--primary);
+      font-size: 18px;
     }
 
     .role-option {
@@ -2042,6 +2350,72 @@
       font-size: 19px;
     }
 
+    .add-account-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 13px 16px;
+      border-radius: 16px;
+      font-size: 14px;
+    }
+
+    .account-role-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid #ccefe0;
+      border-radius: 18px;
+      background: var(--mint-soft);
+    }
+
+    .account-role-card > iconify-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: white;
+      color: #047857;
+      font-size: 21px;
+    }
+
+    .account-role-card strong,
+    .account-role-card small {
+      display: block;
+    }
+
+    .account-role-card small {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .employee-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .employee-form-grid .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-error {
+      margin: 0;
+      color: #b91c1c;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .form-error[hidden] {
+      display: none;
+    }
+
     .empty-state {
       padding: 28px 18px;
       border: 1px dashed #cbdad4;
@@ -2086,7 +2460,7 @@
       }
 
       .home-hero {
-        min-height: 292px;
+        min-height: 338px;
       }
 
       .hero-title {
@@ -2138,18 +2512,18 @@
       }
 
       .promo-card {
-        min-height: 116px;
+        min-height: 88px;
       }
 
       .promo-card h3 {
-        font-size: 19px;
+        font-size: 14px;
       }
 
       .promo-icon {
-        width: 58px;
-        height: 58px;
-        border-radius: 19px;
-        font-size: 28px;
+        width: 46px;
+        height: 46px;
+        border-radius: 16px;
+        font-size: 23px;
       }
 
       .section-title {
@@ -2226,6 +2600,14 @@
       .profile-item {
         flex-direction: column;
         gap: 6px;
+      }
+
+      .employee-form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .employee-form-grid .field.full {
+        grid-column: auto;
       }
 
       .profile-item strong {
@@ -2430,7 +2812,12 @@
 
                 <div class="field">
                   <label for="loginPassword">Password</label>
-                  <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required />
+                  <div class="password-input-wrap">
+                    <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required />
+                    <button class="password-toggle" type="button" data-password-target="loginPassword" aria-label="Show password" title="Show password">
+                      <iconify-icon icon="lucide:eye" aria-hidden="true"></iconify-icon>
+                    </button>
+                  </div>
                 </div>
 
                 <button class="text-button" id="forgotPassword" type="button">Forgot password?</button>
@@ -2463,6 +2850,56 @@
                 <div>
                   <strong>Invitation-only access</strong>
                   <small>Production accounts would be created by HR, authenticated by a managed identity provider, and authorized by the backend.</small>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen role-login" data-screen="passkey">
+          <div class="scroll" style="height:100%;padding-bottom:0;">
+            <div class="statusbar top-safe" style="position:absolute;left:0;right:0;">
+              <span>9:41</span>
+              <span class="status-icons">
+                <span class="signal"><i></i><i></i><i></i></span>
+                <span class="wifi"></span>
+                <span class="battery"></span>
+              </span>
+            </div>
+
+            <div class="role-login-head">
+              <div class="statusbar-spacer" style="height:42px"></div>
+              <div class="role-login-brand">
+                <span class="mini-logo"><iconify-icon icon="lucide:fingerprint" aria-hidden="true"></iconify-icon></span>
+                Secure passkey
+              </div>
+              <h1>Log in using<br />biometrics.</h1>
+              <p>Confirm login with your biometrics.</p>
+            </div>
+
+            <div class="login-body">
+              <section class="login-panel passkey-confirmation" aria-labelledby="passkeyTitle">
+                <span class="passkey-account" id="passkeyAccount">
+                  <iconify-icon icon="lucide:user-round" aria-hidden="true"></iconify-icon>
+                  FieldHR account
+                </span>
+                <h2 id="passkeyTitle">Touch the fingerprint</h2>
+                <p>Use the fingerprint registered on this device to securely confirm your identity.</p>
+                <button class="passkey-scan" id="confirmPasskey" type="button" aria-label="Confirm login with fingerprint">
+                  <iconify-icon icon="lucide:fingerprint" aria-hidden="true"></iconify-icon>
+                </button>
+                <small class="muted" style="font-weight:800;">Tap the fingerprint to continue</small>
+                <button class="passkey-btn" id="cancelPasskey" type="button">
+                  <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+                  Back to Sign In
+                </button>
+              </section>
+
+              <aside class="access-note">
+                <iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong>Biometric demo</strong>
+                  <small>This simulates a device passkey. Production biometrics are verified securely by the phone, not stored by FieldHR.</small>
                 </div>
               </aside>
             </div>
@@ -2535,15 +2972,20 @@
                   <iconify-icon icon="lucide:bell" aria-hidden="true"></iconify-icon>
                   <span class="notification-dot" data-dot-role="employee" aria-hidden="true"></span>
                 </button>
-                <button class="outline-pill" type="button" data-logout>Employee · Sign out</button>
+                <button class="outline-pill" type="button" data-logout>
+                  <iconify-icon icon="lucide:user-round" aria-hidden="true"></iconify-icon>
+                  Employee · Sign out
+                  <iconify-icon icon="lucide:chevron-right" aria-hidden="true"></iconify-icon>
+                </button>
               </div>
 
               <div class="hero-title">
-                <small>Today’s Status</small>
-                <h1 id="statusTitle">Ready to<br />Check In</h1>
+                <small><iconify-icon icon="lucide:sparkles" aria-hidden="true"></iconify-icon> Today’s Status</small>
+                <h1 id="statusTitle"><span>Ready to</span><strong>Check In</strong></h1>
                 <div class="status-line">
-                  <span class="status-dot" aria-hidden="true"></span>
+                  <iconify-icon icon="lucide:map-pin" aria-hidden="true"></iconify-icon>
                   <span id="statusSub">Assigned site: BGC Field Team</span>
+                  <span class="status-confirm" aria-hidden="true"><iconify-icon icon="lucide:check"></iconify-icon></span>
                 </div>
               </div>
             </div>
@@ -2552,21 +2994,26 @@
               <article class="card attendance-card">
                 <div class="card-head">
                   <h3>Today’s Attendance</h3>
-                  <span class="chip" id="verifyChip">Not Verified</span>
+                  <span class="chip" id="verifyChip"><iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon> Not Verified</span>
                 </div>
 
-                <div class="row">
+                <div class="row attendance-times">
                   <div class="mini-metric">
                     <span class="tiny muted">Check In</span>
                     <strong id="checkInTime">--:--</strong>
+                    <span class="time-state" id="checkInState"><iconify-icon icon="lucide:clock-3" aria-hidden="true"></iconify-icon> Waiting</span>
                   </div>
-                  <div class="mini-metric" style="text-align:right;">
+                  <div class="mini-metric">
                     <span class="tiny muted">Check Out</span>
                     <strong id="checkOutTime">--:--</strong>
+                    <span class="time-state" id="checkOutState"><iconify-icon icon="lucide:clock-3" aria-hidden="true"></iconify-icon> Not checked out</span>
                   </div>
                 </div>
 
-                <button class="big-btn" id="checkButton" type="button">Check In Now</button>
+                <button class="big-btn" id="checkButton" type="button">
+                  <iconify-icon icon="lucide:log-in" aria-hidden="true"></iconify-icon>
+                  <span id="checkButtonLabel">Check In Now</span>
+                </button>
               </article>
 
               <article class="connection-card offline" id="homeSyncStatus" hidden>
@@ -2577,54 +3024,28 @@
                 </div>
               </article>
 
-              <article class="promo-card">
+              <button class="promo-card" id="biometricShortcut" type="button">
+                <div class="promo-icon"><iconify-icon icon="lucide:fingerprint" aria-hidden="true"></iconify-icon></div>
                 <div>
-                  <h3>Biometric check-in keeps attendance secure.</h3>
-                  <strong>
-                    Fingerprint / Face verification
-                    <iconify-icon icon="lucide:arrow-right" aria-hidden="true"></iconify-icon>
-                  </strong>
+                  <h3>Biometric check-in</h3>
+                  <strong>Use fingerprint or face verification</strong>
                 </div>
-                <div class="promo-icon"><iconify-icon icon="lucide:scan-face" aria-hidden="true"></iconify-icon></div>
-              </article>
+                <span class="promo-arrow"><iconify-icon icon="lucide:chevron-right" aria-hidden="true"></iconify-icon></span>
+              </button>
 
-              <h2 class="section-title">HR Tools</h2>
+              <h2 class="section-title home-more-title">More tools</h2>
 
-              <div class="tool-grid">
-                <button class="tool-card" type="button" data-go="attendance">
-                  <div class="tool-icon"><iconify-icon icon="lucide:calendar-clock" aria-hidden="true"></iconify-icon></div>
-                  <strong>Attendance History</strong>
-                  <small>View daily logs</small>
-                </button>
-
-                <button class="tool-card" type="button" data-go="leave">
-                  <div class="tool-icon"><iconify-icon icon="lucide:calendar-plus" aria-hidden="true"></iconify-icon></div>
-                  <strong>Leave Filing</strong>
-                  <small>Submit request</small>
-                </button>
-
+              <div class="tool-grid home-more-tools">
                 <button class="tool-card" type="button" data-go="map">
                   <div class="tool-icon"><iconify-icon icon="lucide:map-pinned" aria-hidden="true"></iconify-icon></div>
                   <strong>My Location</strong>
-                  <small>Work area & sharing</small>
-                </button>
-
-                <button class="tool-card" type="button" data-go="profile">
-                  <div class="tool-icon"><iconify-icon icon="lucide:folder-lock" aria-hidden="true"></iconify-icon></div>
-                  <strong>My Records</strong>
-                  <small>Attendance & leave</small>
+                  <small>Work area</small>
                 </button>
 
                 <button class="tool-card" type="button" data-go="reports">
                   <div class="tool-icon"><iconify-icon icon="lucide:chart-no-axes-combined" aria-hidden="true"></iconify-icon></div>
                   <strong>Reports</strong>
-                  <small>Payroll summaries</small>
-                </button>
-
-                <button class="tool-card" type="button" data-go="alerts">
-                  <div class="tool-icon"><iconify-icon icon="lucide:bell-ring" aria-hidden="true"></iconify-icon></div>
-                  <strong>Alerts</strong>
-                  <small>Reminders & approvals</small>
+                  <small>Payroll summary</small>
                 </button>
               </div>
             </div>
@@ -2651,7 +3072,7 @@
             </header>
 
             <div class="page-body">
-              <div class="biometric-toggle" aria-label="Choose biometric method">
+              <div class="biometric-toggle" aria-label="Choose biometric verification method">
                 <button class="active" type="button" data-biometric="fingerprint">
                   <iconify-icon icon="lucide:fingerprint" aria-hidden="true"></iconify-icon>
                   Fingerprint
@@ -2662,10 +3083,18 @@
                 </button>
               </div>
 
+              <div class="account-role-card" style="margin-bottom:16px;">
+                <iconify-icon icon="lucide:smartphone" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong>Verified securely on this device</strong>
+                  <small>Fingerprint and face verification stay on the phone. FieldHR receives only the signed result.</small>
+                </div>
+              </div>
+
               <article class="verify-box">
                 <div class="finger"><iconify-icon id="biometricIcon" icon="lucide:fingerprint" aria-hidden="true"></iconify-icon></div>
                 <h1 id="biometricTitle">Touch Sensor</h1>
-                <p id="biometricCopy">Place your registered finger on the phone sensor to verify your identity.</p>
+                <p id="biometricCopy">Use your registered fingerprint to securely verify your identity on this device.</p>
               </article>
 
               <article class="connection-card" id="locationCheckCard">
@@ -2683,7 +3112,7 @@
                   <div class="dot">1</div>
                   <div>
                     <strong>Biometric Verification</strong>
-                    <small>Matches the fingerprint or face registered to this employee account, preventing another person from recording attendance.</small>
+                    <small>The phone verifies its registered user locally. FieldHR receives a signed confirmation, never a fingerprint or face scan.</small>
                   </div>
                 </div>
 
@@ -2715,7 +3144,7 @@
               <div style="height:10px"></div>
               <button class="small-btn" id="toggleOffline" type="button">Simulate Poor Signal</button>
               <div style="height:10px"></div>
-              <button class="big-btn dark" id="simulateVerify" type="button">Verify with Fingerprint</button>
+              <button class="big-btn dark" id="simulateVerify" type="button">Verify Fingerprint & Check In</button>
             </div>
           </div>
         </section>
@@ -3062,6 +3491,14 @@
                 </button>
               </div>
 
+              <article class="connection-card" data-employee-only id="registeredDeviceCard" style="margin:0 0 22px;">
+                <iconify-icon icon="lucide:smartphone-check" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong id="registeredDeviceTitle">Attendance device registered</strong>
+                  <small id="registeredDeviceCopy">Device biometrics can sign secure check-in and check-out records.</small>
+                </div>
+              </article>
+
               <article class="card flat" data-management-only style="margin-bottom:22px;">
                 <div class="profile-list">
                   <div class="profile-item">
@@ -3280,6 +3717,11 @@
                 <input id="peopleSearch" type="search" aria-label="Search employees" placeholder="Search employee or ID" />
               </div>
 
+              <button class="big-btn add-account-btn" type="button" data-go="employee-create" data-hr-only>
+                <iconify-icon icon="lucide:user-plus" aria-hidden="true"></iconify-icon>
+                Add Employee Account
+              </button>
+
               <div class="row" style="margin-bottom:14px;">
                 <div>
                   <span class="tiny muted" id="peopleScope">Field Operations</span>
@@ -3322,6 +3764,302 @@
                 <div>
                   <strong>Access is recorded</strong>
                   <small>Opening a 201 file creates an audit entry for employee privacy and compliance review.</small>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen screen-page" data-screen="employee-create">
+          <div class="scroll">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span class="status-icons">
+                <span class="signal"><i></i><i></i><i></i></span>
+                <span class="wifi"></span>
+                <span class="battery"></span>
+              </span>
+            </div>
+
+            <header class="page-header">
+              <button class="back-btn" type="button" data-go="people" aria-label="Back to employee records">
+                <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+              </button>
+              <h2>New Account</h2>
+              <span></span>
+            </header>
+
+            <div class="page-body">
+              <aside class="access-note" style="margin-top:0;margin-bottom:16px;">
+                <iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong>HR-controlled account creation</strong>
+                  <small>The employee receives an invitation to activate the account and register a secure password or passkey.</small>
+                </div>
+              </aside>
+
+              <form class="card form-card" id="employeeAccountForm">
+                <div class="account-role-card">
+                  <iconify-icon icon="lucide:hard-hat" aria-hidden="true"></iconify-icon>
+                  <div>
+                    <strong>Employee role</strong>
+                    <small>Own attendance, leave, reminders, and personal records only</small>
+                  </div>
+                </div>
+
+                <div class="employee-form-grid">
+                  <div class="field full">
+                    <label for="newEmployeeName">Full name</label>
+                    <input id="newEmployeeName" name="name" autocomplete="name" placeholder="Juan Dela Cruz" required />
+                  </div>
+
+                  <div class="field full">
+                    <label for="newEmployeeEmail">Work email</label>
+                    <input id="newEmployeeEmail" name="email" type="email" autocomplete="email" placeholder="juan@company.com" required />
+                  </div>
+
+                  <div class="field">
+                    <label for="newEmployeeId">Employee ID</label>
+                    <input id="newEmployeeId" name="employeeId" placeholder="EMP-125" required />
+                  </div>
+
+                  <div class="field">
+                    <label for="newEmployeeHired">Date hired</label>
+                    <input id="newEmployeeHired" name="hired" type="date" required />
+                  </div>
+
+                  <div class="field full">
+                    <label for="newEmployeePosition">Position</label>
+                    <input id="newEmployeePosition" name="position" placeholder="Field Operations Staff" required />
+                  </div>
+
+                  <div class="field">
+                    <label for="newEmployeeDepartment">Department</label>
+                    <select id="newEmployeeDepartment" name="department" required>
+                      <option>Field Operations</option>
+                      <option>Logistics</option>
+                      <option>Administration</option>
+                      <option>Human Resources</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label for="newEmployeeWorksite">Assigned worksite</label>
+                    <select id="newEmployeeWorksite" name="worksite" required>
+                      <option>BGC Field Team</option>
+                      <option>Makati Field Team</option>
+                      <option>Quezon City Field Team</option>
+                      <option>Office Based</option>
+                    </select>
+                  </div>
+
+                  <div class="field full">
+                    <label for="newEmployeeEmergency">Emergency contact</label>
+                    <input id="newEmployeeEmergency" name="emergency" placeholder="Name · 09XX XXX XXXX" required />
+                  </div>
+                </div>
+
+                <p class="form-error" id="employeeAccountError" role="alert" hidden></p>
+
+                <button class="big-btn dark" type="submit">
+                  <iconify-icon icon="lucide:send" aria-hidden="true"></iconify-icon>
+                  Create Account & Send Invite
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen screen-page" data-screen="invite-sent">
+          <div class="scroll">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span class="status-icons">
+                <span class="signal"><i></i><i></i><i></i></span>
+                <span class="wifi"></span>
+                <span class="battery"></span>
+              </span>
+            </div>
+
+            <header class="page-header">
+              <button class="back-btn" type="button" data-go="people" aria-label="Back to employee records">
+                <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+              </button>
+              <h2>Invite Sent</h2>
+              <span></span>
+            </header>
+
+            <div class="page-body">
+              <section class="card passkey-confirmation">
+                <span class="passkey-scan setup-success-icon" aria-hidden="true">
+                  <iconify-icon icon="lucide:mail-check"></iconify-icon>
+                </span>
+                <span class="chip"><iconify-icon icon="lucide:clock-3" aria-hidden="true"></iconify-icon> Activation pending</span>
+                <h2 id="inviteEmployeeName">Employee account created</h2>
+                <p id="inviteEmployeeEmail">An activation invitation is ready for the employee.</p>
+              </section>
+
+              <aside class="access-note">
+                <iconify-icon icon="lucide:list-checks" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong>What the employee does next</strong>
+                  <small>Accept invitation → confirm account → register this phone → enable device biometrics.</small>
+                </div>
+              </aside>
+
+              <div style="height:16px"></div>
+              <button class="big-btn dark" id="previewEmployeeSetup" type="button">
+                <iconify-icon icon="lucide:play" aria-hidden="true"></iconify-icon>
+                Preview Employee Activation
+              </button>
+              <div style="height:10px"></div>
+              <button class="passkey-btn" type="button" data-go="people">Return to Employee Records</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen role-login" data-screen="employee-activation">
+          <div class="scroll" style="height:100%;padding-bottom:0;">
+            <div class="statusbar top-safe" style="position:absolute;left:0;right:0;">
+              <span>9:41</span>
+              <span class="status-icons">
+                <span class="signal"><i></i><i></i><i></i></span>
+                <span class="wifi"></span>
+                <span class="battery"></span>
+              </span>
+            </div>
+
+            <div class="role-login-head">
+              <div class="statusbar-spacer" style="height:42px"></div>
+              <div class="role-login-brand">
+                <span class="mini-logo"><iconify-icon icon="lucide:mail-check" aria-hidden="true"></iconify-icon></span>
+                Employee setup · Step 1 of 2
+              </div>
+              <h1>Confirm your<br />account.</h1>
+              <p>Verify the invited email and create a private password before registering biometrics.</p>
+            </div>
+
+            <div class="login-body">
+              <form class="login-panel" id="employeeActivationForm">
+                <span class="passkey-account" id="activationEmployeeName">
+                  <iconify-icon icon="lucide:user-round" aria-hidden="true"></iconify-icon>
+                  New employee
+                </span>
+
+                <div class="field">
+                  <label for="activationEmail">Invited email</label>
+                  <input id="activationEmail" name="email" type="email" readonly />
+                </div>
+
+                <div class="field mfa-code">
+                  <label for="activationCode">Email verification code</label>
+                  <input id="activationCode" name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="000000" required />
+                </div>
+
+                <div class="field">
+                  <label for="activationPassword">Create password</label>
+                  <div class="password-input-wrap">
+                    <input id="activationPassword" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required />
+                    <button class="password-toggle" type="button" data-password-target="activationPassword" aria-label="Show password" title="Show password">
+                      <iconify-icon icon="lucide:eye" aria-hidden="true"></iconify-icon>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="activationPasswordConfirm">Confirm password</label>
+                  <div class="password-input-wrap">
+                    <input id="activationPasswordConfirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" placeholder="Enter password again" required />
+                    <button class="password-toggle" type="button" data-password-target="activationPasswordConfirm" aria-label="Show password" title="Show password">
+                      <iconify-icon icon="lucide:eye" aria-hidden="true"></iconify-icon>
+                    </button>
+                  </div>
+                </div>
+
+                <p class="form-error" id="employeeActivationError" role="alert" hidden></p>
+
+                <button class="big-btn dark" type="submit">
+                  <iconify-icon icon="lucide:badge-check" aria-hidden="true"></iconify-icon>
+                  Confirm Email & Continue
+                </button>
+                <button class="passkey-btn" id="cancelEmployeeActivation" type="button">
+                  <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+                  Back to Invitation
+                </button>
+              </form>
+
+              <aside class="access-note">
+                <iconify-icon icon="lucide:key-round" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong>Prototype email code: 638214</strong>
+                  <small>Production would send a short-lived, single-use code to the invited employee email.</small>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section class="screen role-login" data-screen="device-enrollment">
+          <div class="scroll" style="height:100%;padding-bottom:0;">
+            <div class="statusbar top-safe" style="position:absolute;left:0;right:0;">
+              <span>9:41</span>
+              <span class="status-icons">
+                <span class="signal"><i></i><i></i><i></i></span>
+                <span class="wifi"></span>
+                <span class="battery"></span>
+              </span>
+            </div>
+
+            <div class="role-login-head">
+              <div class="statusbar-spacer" style="height:42px"></div>
+              <div class="role-login-brand">
+                <span class="mini-logo"><iconify-icon icon="lucide:smartphone" aria-hidden="true"></iconify-icon></span>
+                Employee setup · Final step
+              </div>
+              <h1>Register this<br />phone.</h1>
+              <p>Connect this device to your employee account for secure attendance.</p>
+            </div>
+
+            <div class="login-body">
+              <section class="login-panel passkey-confirmation">
+                <span class="passkey-account" id="enrollmentAccount">
+                  <iconify-icon icon="lucide:user-round" aria-hidden="true"></iconify-icon>
+                  Employee account
+                </span>
+                <div class="biometric-toggle" style="width:100%;margin-bottom:0;" aria-label="Choose biometric enrollment method">
+                  <button class="active" type="button" data-enrollment-biometric="fingerprint">
+                    <iconify-icon icon="lucide:fingerprint" aria-hidden="true"></iconify-icon>
+                    Fingerprint
+                  </button>
+                  <button type="button" data-enrollment-biometric="face">
+                    <iconify-icon icon="lucide:scan-face" aria-hidden="true"></iconify-icon>
+                    Face Scan
+                  </button>
+                </div>
+                <h2 id="enrollmentMethodTitle">Enable fingerprint</h2>
+                <p id="enrollmentMethodCopy">Confirm using the fingerprint registered securely on this phone.</p>
+                <button class="passkey-scan" id="registerAttendanceDevice" type="button" aria-label="Register this phone using device biometrics">
+                  <iconify-icon id="enrollmentBiometricIcon" icon="lucide:fingerprint" aria-hidden="true"></iconify-icon>
+                </button>
+                <small class="muted" id="enrollmentTapCopy" style="font-weight:800;">Tap to register fingerprint verification</small>
+              </section>
+
+              <div class="setup-checklist">
+                <div><iconify-icon icon="lucide:circle-check" aria-hidden="true"></iconify-icon><span>Invitation accepted</span></div>
+                <div><iconify-icon icon="lucide:circle-check" aria-hidden="true"></iconify-icon><span>Employee account confirmed</span></div>
+                <div><iconify-icon icon="lucide:circle-dot" aria-hidden="true"></iconify-icon><span>Register attendance device</span></div>
+              </div>
+
+              <button class="passkey-btn" id="cancelDeviceEnrollment" type="button">
+                <iconify-icon icon="lucide:arrow-left" aria-hidden="true"></iconify-icon>
+                Back to Account Setup
+              </button>
+
+              <aside class="access-note">
+                <iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon>
+                <div>
+                  <strong>Your biometric data stays on this phone</strong>
+                  <small>FieldHR stores only a device credential used to sign attendance records.</small>
                 </div>
               </aside>
             </div>
@@ -3584,6 +4322,9 @@
     const checkInTime = document.getElementById("checkInTime");
     const historyTodayIn = document.getElementById("historyTodayIn");
     const checkButton = document.getElementById("checkButton");
+    const checkButtonLabel = document.getElementById("checkButtonLabel");
+    const checkInState = document.getElementById("checkInState");
+    const checkOutState = document.getElementById("checkOutState");
     const checkinConnection = document.getElementById("checkinConnection");
     const connectionTitle = document.getElementById("connectionTitle");
     const connectionCopy = document.getElementById("connectionCopy");
@@ -3599,6 +4340,16 @@
     const mfaCode = document.getElementById("mfaCode");
     const mfaError = document.getElementById("mfaError");
     const mfaCopy = document.getElementById("mfaCopy");
+    const passkeyAccount = document.getElementById("passkeyAccount");
+    const employeeAccountForm = document.getElementById("employeeAccountForm");
+    const employeeAccountError = document.getElementById("employeeAccountError");
+    const inviteEmployeeName = document.getElementById("inviteEmployeeName");
+    const inviteEmployeeEmail = document.getElementById("inviteEmployeeEmail");
+    const enrollmentAccount = document.getElementById("enrollmentAccount");
+    const employeeActivationForm = document.getElementById("employeeActivationForm");
+    const employeeActivationError = document.getElementById("employeeActivationError");
+    const activationEmail = document.getElementById("activationEmail");
+    const activationEmployeeName = document.getElementById("activationEmployeeName");
 
     document.querySelectorAll(".wifi").forEach(wifi => {
       const icon = document.createElement("iconify-icon");
@@ -3623,8 +4374,12 @@
     let pendingAccount = null;
     let authenticated = false;
     let biometricMethod = "fingerprint";
+    let enrollmentBiometricMethod = "fingerprint";
     let attendanceAction = "checkin";
     let locationValid = true;
+    let createdEmployeeCount = 0;
+    let lastCreatedAccountKey = null;
+    let activationAccountKey = null;
 
     const demoPassword = "FieldHR2026!";
     const demoAccounts = {
@@ -3633,7 +4388,11 @@
         email: "employee@fieldhr.demo",
         name: "Steve Cabugos",
         role: "employee",
-        status: "active"
+        status: "active",
+        personKey: "steve",
+        credentialRegistered: true,
+        deviceName: "Registered personal phone",
+        registeredBiometric: "Fingerprint and face scan"
       },
       supervisor: {
         id: "SUP-001",
@@ -3702,6 +4461,29 @@
       setTimeout(() => toast.classList.remove("show"), 2300);
     }
 
+    function resetPasswordVisibility(container = document) {
+      container.querySelectorAll("[data-password-target]").forEach(button => {
+        const input = document.getElementById(button.dataset.passwordTarget);
+        if (!input) return;
+        input.type = "password";
+        button.setAttribute("aria-label", "Show password");
+        button.title = "Show password";
+        button.querySelector("iconify-icon").setAttribute("icon", "lucide:eye");
+      });
+    }
+
+    document.querySelectorAll("[data-password-target]").forEach(button => {
+      button.addEventListener("click", () => {
+        const input = document.getElementById(button.dataset.passwordTarget);
+        if (!input) return;
+        const showing = input.type === "text";
+        input.type = showing ? "password" : "text";
+        button.setAttribute("aria-label", showing ? "Show password" : "Hide password");
+        button.title = showing ? "Show password" : "Hide password";
+        button.querySelector("iconify-icon").setAttribute("icon", showing ? "lucide:eye" : "lucide:eye-off");
+      });
+    });
+
     function configureNavigation() {
       roleFlows[currentRole].nav.forEach((item, index) => {
         const [screen, icon, label] = item;
@@ -3720,17 +4502,25 @@
       document.getElementById("profileEmployeeId").textContent = person.id;
       document.getElementById("profileDepartment").textContent = person.department;
       document.getElementById("profileHired").textContent = person.hired;
-      document.getElementById("profileEmergency").innerHTML = person.emergency;
+      const emergencyElement = document.getElementById("profileEmergency");
+      const emergencyParts = String(person.emergency).split(/<br\s*\/?>|\s+·\s+/i);
+      emergencyElement.replaceChildren();
+      emergencyParts.forEach((part, index) => {
+        if (index > 0) emergencyElement.append(document.createElement("br"));
+        emergencyElement.append(document.createTextNode(part));
+      });
     }
 
     function defaultPeopleCount() {
-      return currentRole === "hr" ? "124 Employees" : "18 Employees";
+      return currentRole === "hr" ? `${124 + createdEmployeeCount} Employees` : "18 Employees";
     }
 
     function resetPeopleSearch() {
       const search = document.getElementById("peopleSearch");
       search.value = "";
-      document.querySelectorAll(".person-row").forEach(row => row.hidden = false);
+      document.querySelectorAll(".person-row").forEach(row => {
+        row.hidden = row.hasAttribute("data-company-only") && currentRole !== "hr";
+      });
       document.getElementById("peopleEmpty").hidden = true;
       document.getElementById("peopleCount").textContent = defaultPeopleCount();
     }
@@ -3743,6 +4533,7 @@
           : !management;
       });
       document.querySelectorAll("[data-employee-only]").forEach(item => item.hidden = management);
+      document.querySelectorAll("[data-hr-only]").forEach(item => item.hidden = currentRole !== "hr");
       const profileBadge = document.getElementById("profileAccessBadge");
       const profileTitle = document.getElementById("profileAccessTitle");
       const profileCopy = document.getElementById("profileAccessCopy");
@@ -3756,7 +4547,16 @@
 
       document.getElementById("profileTitle").textContent = management ? "201 File" : "My Records";
       document.getElementById("profileBack").dataset.go = management ? "people" : "home";
-      if (!management) populateProfile("steve");
+      if (!management) {
+        populateProfile(currentAccount?.personKey || "steve");
+        const deviceRegistered = currentAccount?.credentialRegistered !== false;
+        document.getElementById("registeredDeviceTitle").textContent = deviceRegistered
+          ? "Attendance device registered"
+          : "Attendance device not registered";
+        document.getElementById("registeredDeviceCopy").textContent = deviceRegistered
+          ? `${currentAccount?.deviceName || "This phone"} · ${currentAccount?.registeredBiometric || "Device biometric"} verification enabled.`
+          : "Register a personal phone before using biometric attendance.";
+      }
       document.getElementById("mapTitle").textContent = management ? "Team Map" : "My Work Area";
       document.getElementById("mapLiveLabel").textContent = management ? "Team locations · Live" : "My location · Live";
       document.getElementById("reportsTitle").textContent = currentRole === "employee"
@@ -3849,6 +4649,7 @@
       authenticated = false;
       currentRole = "employee";
       loginPassword.value = "";
+      resetPasswordVisibility(loginForm);
       loginError.hidden = true;
       mfaError.hidden = true;
       go("login");
@@ -3857,9 +4658,14 @@
     }
 
     function go(screenName) {
-      const publicScreens = ["splash", "login", "mfa"];
+      const publicScreens = ["splash", "login", "passkey", "mfa", "employee-activation", "device-enrollment"];
       if (!authenticated && !publicScreens.includes(screenName)) screenName = "login";
       if (screenName === "mfa" && !pendingAccount) screenName = "login";
+      if (screenName === "passkey" && !pendingAccount) screenName = "login";
+      if (screenName === "employee-create" && currentRole !== "hr") screenName = roleFlows[currentRole].home;
+      if (screenName === "invite-sent" && (currentRole !== "hr" || !lastCreatedAccountKey)) screenName = roleFlows[currentRole].home;
+      if (screenName === "employee-activation" && !activationAccountKey) screenName = authenticated ? roleFlows[currentRole].home : "login";
+      if (screenName === "device-enrollment" && !activationAccountKey) screenName = authenticated ? roleFlows[currentRole].home : "login";
       if (screenName === "home") screenName = roleFlows[currentRole].home;
 
       screens.forEach(screen => {
@@ -3918,7 +4724,8 @@
     loginForm.addEventListener("submit", event => {
       event.preventDefault();
       const account = findDemoAccount(loginIdentifier.value);
-      if (!account || loginPassword.value !== demoPassword) {
+      const expectedPassword = account?.password || demoPassword;
+      if (!account || loginPassword.value !== expectedPassword) {
         loginError.querySelector("span").textContent = "Account or password is incorrect.";
         loginError.hidden = false;
         recordAudit("login:failed", account);
@@ -3934,8 +4741,31 @@
         loginError.hidden = false;
         return;
       }
-      showToast("Device passkey verified for this simulation.");
-      beginAuthentication(account, "passkey");
+      if (account.status !== "active" || account.credentialRegistered === false) {
+        loginError.querySelector("span").textContent = "Finish email confirmation and device registration before using biometrics to log in.";
+        loginError.hidden = false;
+        return;
+      }
+      loginError.hidden = true;
+      pendingAccount = account;
+      passkeyAccount.innerHTML = `<iconify-icon icon="lucide:user-round" aria-hidden="true"></iconify-icon> ${account.email}`;
+      recordAudit("passkey:prompted", account);
+      go("passkey");
+    });
+
+    document.getElementById("confirmPasskey").addEventListener("click", () => {
+      if (!pendingAccount || pendingAccount.status !== "active" || pendingAccount.credentialRegistered === false) {
+        pendingAccount = null;
+        go("login");
+        return;
+      }
+      recordAudit("passkey:verified", pendingAccount);
+      completeLogin(pendingAccount, "passkey");
+    });
+
+    document.getElementById("cancelPasskey").addEventListener("click", () => {
+      pendingAccount = null;
+      go("login");
     });
 
     document.getElementById("forgotPassword").addEventListener("click", () => {
@@ -3998,12 +4828,10 @@
       document.getElementById("biometricIcon").setAttribute("icon", faceMode ? "lucide:scan-face" : "lucide:fingerprint");
       document.getElementById("biometricTitle").textContent = faceMode ? "Position Your Face" : "Touch Sensor";
       document.getElementById("biometricCopy").textContent = faceMode
-        ? `Center your face in the frame to confirm your ${checkingOut ? "check-out" : "check-in"}.`
-        : `Use your registered fingerprint to confirm your ${checkingOut ? "check-out" : "check-in"}.`;
+        ? `Use the face verification registered on this device to confirm your ${checkingOut ? "check-out" : "check-in"}.`
+        : `Use the fingerprint registered on this device to confirm your ${checkingOut ? "check-out" : "check-in"}.`;
       document.getElementById("checkinPageTitle").textContent = checkingOut ? "Secure Check-Out" : "Secure Check-In";
-      document.getElementById("simulateVerify").textContent = faceMode
-        ? `Verify Face & ${checkingOut ? "Check Out" : "Check In"}`
-        : `Verify Fingerprint & ${checkingOut ? "Check Out" : "Check In"}`;
+      document.getElementById("simulateVerify").textContent = `${faceMode ? "Verify Face" : "Verify Fingerprint"} & ${checkingOut ? "Check Out" : "Check In"}`;
       document.getElementById("locationCheckCard").hidden = checkingOut;
       document.getElementById("toggleWrongLocation").hidden = checkingOut;
     }
@@ -4052,6 +4880,10 @@
       go("checkin");
     });
 
+    document.getElementById("biometricShortcut").addEventListener("click", () => {
+      checkButton.click();
+    });
+
     document.getElementById("simulateVerify").addEventListener("click", () => {
       const methodLabel = biometricMethod === "face" ? "Face" : "Fingerprint";
 
@@ -4072,10 +4904,13 @@
         const todayStatus = document.getElementById("historyTodayStatus");
         todayStatus.textContent = "Completed";
         todayStatus.className = "chip";
-        statusTitle.innerHTML = "Shift<br />Completed";
+        statusTitle.innerHTML = "<span>Shift</span><strong>Completed</strong>";
         statusSub.textContent = "Attendance submitted for payroll review";
-        verifyChip.textContent = `${methodLabel} Verified`;
-        checkButton.textContent = "Next Shift · Jul 3, 8:00 AM";
+        verifyChip.innerHTML = `<iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon> ${methodLabel} Verified`;
+        checkOutState.innerHTML = '<iconify-icon icon="lucide:circle-check" aria-hidden="true"></iconify-icon> Completed';
+        checkOutState.classList.add("active");
+        checkButtonLabel.textContent = "Next Shift · Jul 3, 8:00 AM";
+        checkButton.querySelector("iconify-icon").setAttribute("icon", "lucide:calendar-clock");
         checkButton.classList.add("secondary");
         checkButton.disabled = true;
         go("home");
@@ -4084,13 +4919,16 @@
       }
 
       checkedIn = true;
-      statusTitle.innerHTML = "Checked In<br />8:02 AM";
+      statusTitle.innerHTML = "<span>Checked In</span><strong>8:02 AM</strong>";
       statusSub.textContent = "Inside assigned area · GPS verified";
-      verifyChip.textContent = `${methodLabel} Verified`;
+      verifyChip.innerHTML = `<iconify-icon icon="lucide:shield-check" aria-hidden="true"></iconify-icon> ${methodLabel} Verified`;
       verifyChip.classList.remove("warn");
       checkInTime.textContent = "8:02 AM";
       historyTodayIn.textContent = "8:02 AM";
-      checkButton.textContent = "Check Out";
+      checkInState.innerHTML = '<iconify-icon icon="lucide:circle-check" aria-hidden="true"></iconify-icon> On time';
+      checkInState.classList.add("active");
+      checkButtonLabel.textContent = "Check Out";
+      checkButton.querySelector("iconify-icon").setAttribute("icon", "lucide:log-out");
       checkButton.classList.remove("secondary");
       checkButton.disabled = false;
       go("home");
@@ -4187,13 +5025,229 @@
       showToast("All notifications marked as read.");
     });
 
+    document.getElementById("newEmployeeHired").value = "2026-07-03";
+
+    employeeAccountForm.addEventListener("submit", event => {
+      event.preventDefault();
+      employeeAccountError.hidden = true;
+
+      if (currentRole !== "hr") {
+        employeeAccountError.textContent = "Only an authorized HR account can create employee accounts.";
+        employeeAccountError.hidden = false;
+        return;
+      }
+
+      const formData = new FormData(employeeAccountForm);
+      const name = String(formData.get("name") || "").trim();
+      const email = String(formData.get("email") || "").trim().toLowerCase();
+      const employeeId = String(formData.get("employeeId") || "").trim().toUpperCase();
+      const position = String(formData.get("position") || "").trim();
+      const department = String(formData.get("department") || "").trim();
+      const worksite = String(formData.get("worksite") || "").trim();
+      const emergency = String(formData.get("emergency") || "").trim();
+      const hiredValue = String(formData.get("hired") || "").trim();
+
+      const duplicateAccount = Object.values(demoAccounts).some(account =>
+        account.email.toLowerCase() === email || account.id.toLowerCase() === employeeId.toLowerCase()
+      );
+
+      if (duplicateAccount) {
+        employeeAccountError.textContent = "That work email or employee ID already belongs to an account.";
+        employeeAccountError.hidden = false;
+        return;
+      }
+
+      const initials = name.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join("").toUpperCase();
+      const hiredDate = new Date(`${hiredValue}T00:00:00`);
+      const hired = hiredDate.toLocaleDateString(undefined, { month: "short", day: "2-digit", year: "numeric" });
+      const recordKey = `created-${Date.now()}`;
+
+      peopleRecords[recordKey] = {
+        initials: initials || "NE",
+        name,
+        position,
+        id: employeeId,
+        department,
+        hired,
+        emergency,
+        worksite
+      };
+
+      demoAccounts[recordKey] = {
+        id: employeeId,
+        email,
+        name,
+        role: "employee",
+        status: "invited",
+        personKey: recordKey,
+        emailVerified: false,
+        password: null,
+        credentialRegistered: false,
+        deviceName: null
+      };
+
+      const row = document.createElement("button");
+      row.className = "person-row";
+      row.type = "button";
+      row.dataset.go = "profile";
+      row.dataset.person = recordKey;
+      row.setAttribute("data-company-only", "");
+
+      const avatar = document.createElement("span");
+      avatar.className = "person-avatar";
+      avatar.textContent = initials || "NE";
+
+      const summary = document.createElement("span");
+      const employeeName = document.createElement("strong");
+      employeeName.textContent = name;
+      const employeeMeta = document.createElement("small");
+      employeeMeta.textContent = `${employeeId} · ${department} · Invite pending`;
+      summary.append(employeeName, employeeMeta);
+
+      const chevron = document.createElement("iconify-icon");
+      chevron.setAttribute("icon", "lucide:chevron-right");
+      chevron.setAttribute("aria-hidden", "true");
+      row.append(avatar, summary, chevron);
+
+      document.getElementById("peopleEmpty").before(row);
+      createdEmployeeCount += 1;
+      lastCreatedAccountKey = recordKey;
+      recordAudit(`employee-account:invited:${employeeId}`);
+      inviteEmployeeName.textContent = `${name}'s account is ready`;
+      inviteEmployeeEmail.textContent = `Activation invitation sent to ${email}.`;
+      employeeAccountForm.reset();
+      document.getElementById("newEmployeeHired").value = "2026-07-03";
+      resetPeopleSearch();
+      go("invite-sent");
+      showToast(`Account created. Invitation sent to ${email}.`);
+    });
+
+    function updateEnrollmentBiometricUI() {
+      const faceMode = enrollmentBiometricMethod === "face";
+      document.querySelectorAll("[data-enrollment-biometric]").forEach(item => {
+        item.classList.toggle("active", item.dataset.enrollmentBiometric === enrollmentBiometricMethod);
+      });
+      document.getElementById("enrollmentBiometricIcon").setAttribute("icon", faceMode ? "lucide:scan-face" : "lucide:fingerprint");
+      document.getElementById("enrollmentMethodTitle").textContent = faceMode ? "Enable face scan" : "Enable fingerprint";
+      document.getElementById("enrollmentMethodCopy").textContent = faceMode
+        ? "Confirm using face verification registered securely on this phone."
+        : "Confirm using the fingerprint registered securely on this phone.";
+      document.getElementById("enrollmentTapCopy").textContent = faceMode
+        ? "Tap to register face scan verification"
+        : "Tap to register fingerprint verification";
+    }
+
+    document.querySelectorAll("[data-enrollment-biometric]").forEach(button => {
+      button.addEventListener("click", () => {
+        enrollmentBiometricMethod = button.dataset.enrollmentBiometric;
+        updateEnrollmentBiometricUI();
+      });
+    });
+
+    document.getElementById("previewEmployeeSetup").addEventListener("click", () => {
+      const account = demoAccounts[lastCreatedAccountKey];
+      if (!account) {
+        go("people");
+        return;
+      }
+      activationAccountKey = lastCreatedAccountKey;
+      employeeActivationForm.reset();
+      resetPasswordVisibility(employeeActivationForm);
+      employeeActivationError.hidden = true;
+      activationEmail.value = account.email;
+      activationEmployeeName.innerHTML = `<iconify-icon icon="lucide:user-round" aria-hidden="true"></iconify-icon> ${account.name}`;
+      recordAudit(`employee-activation:started:${account.id}`);
+      go("employee-activation");
+    });
+
+    employeeActivationForm.addEventListener("submit", event => {
+      event.preventDefault();
+      employeeActivationError.hidden = true;
+      const account = demoAccounts[activationAccountKey];
+      const code = document.getElementById("activationCode").value.trim();
+      const password = document.getElementById("activationPassword").value;
+      const passwordConfirm = document.getElementById("activationPasswordConfirm").value;
+
+      if (!account || activationEmail.value.toLowerCase() !== account.email.toLowerCase()) {
+        employeeActivationError.textContent = "The invitation email does not match this employee account.";
+        employeeActivationError.hidden = false;
+        return;
+      }
+
+      if (code !== "638214") {
+        employeeActivationError.textContent = "Enter the valid 6-digit code sent to the invited email.";
+        employeeActivationError.hidden = false;
+        return;
+      }
+
+      if (password.length < 8 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password)) {
+        employeeActivationError.textContent = "Use at least 8 characters with uppercase, lowercase, and a number.";
+        employeeActivationError.hidden = false;
+        return;
+      }
+
+      if (password !== passwordConfirm) {
+        employeeActivationError.textContent = "The password confirmation does not match.";
+        employeeActivationError.hidden = false;
+        return;
+      }
+
+      account.emailVerified = true;
+      account.password = password;
+      account.status = "device_pending";
+      const employeeRow = document.querySelector(`.person-row[data-person="${activationAccountKey}"]`);
+      if (employeeRow) {
+        employeeRow.querySelector("small").textContent = `${account.id} · ${peopleRecords[activationAccountKey].department} · Email verified`;
+      }
+      enrollmentBiometricMethod = "fingerprint";
+      updateEnrollmentBiometricUI();
+      enrollmentAccount.innerHTML = `<iconify-icon icon="lucide:user-round" aria-hidden="true"></iconify-icon> ${account.email}`;
+      recordAudit(`employee-email:verified:${account.id}`, account);
+      go("device-enrollment");
+      showToast("Email confirmed. Create the attendance device credential next.");
+    });
+
+    document.getElementById("cancelEmployeeActivation").addEventListener("click", () => {
+      activationAccountKey = null;
+      employeeActivationError.hidden = true;
+      go("invite-sent");
+    });
+
+    document.getElementById("registerAttendanceDevice").addEventListener("click", () => {
+      const accountKey = activationAccountKey;
+      const account = demoAccounts[accountKey];
+      if (!account) {
+        activationAccountKey = null;
+        go("login");
+        return;
+      }
+
+      account.status = "active";
+      account.credentialRegistered = true;
+      account.deviceName = "Registered personal phone";
+      account.registeredBiometric = enrollmentBiometricMethod === "face" ? "Face scan" : "Fingerprint";
+      const employeeRow = document.querySelector(`.person-row[data-person="${accountKey}"]`);
+      if (employeeRow) {
+        employeeRow.querySelector("small").textContent = `${account.id} · ${peopleRecords[accountKey].department} · Device registered`;
+      }
+      recordAudit(`attendance-device:registered:${account.id}`, account);
+      activationAccountKey = null;
+      completeLogin(account, "invite+device-biometric");
+      showToast(`${account.registeredBiometric} registered. Your employee account is ready.`);
+    });
+
+    document.getElementById("cancelDeviceEnrollment").addEventListener("click", () => {
+      go("employee-activation");
+    });
+
     document.getElementById("peopleSearch").addEventListener("input", event => {
       const query = event.target.value.trim().toLowerCase();
       const rows = [...document.querySelectorAll(".person-row")];
       let visibleCount = 0;
 
       rows.forEach(row => {
-        const matches = query === "" || row.textContent.toLowerCase().includes(query);
+        const inScope = !(row.hasAttribute("data-company-only") && currentRole !== "hr");
+        const matches = inScope && (query === "" || row.textContent.toLowerCase().includes(query));
         row.hidden = !matches;
         if (matches) visibleCount += 1;
       });
